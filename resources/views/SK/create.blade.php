@@ -22,13 +22,19 @@
         <div class="card">
             <h4 class="card-header">Tambah Surat Keterangan </h4>
                 <div class="card-body">
+                    <div class="mb-4">
+                        <div class="btn-group">
+                            <a href="{{ url('admindesa/warga/create') }}" class="center btn btn-gradient btn-primary" title="Tambah Data">Tambah Data Warga </i></a>
+                        </div>
+                        <br>
+                    </div>
                     <form method="POST" action="{{ url('admindesa/SK/store') }}" enctype="multipart/form-data">
                         @csrf
                     <div class="row">
                         <div class="col-md-12 mb-4">
                             <h6>Nama Warga / yang Mengajukan Surat</h6>
                             <div class="form-group">
-                                <select class="choices form-select" name="id_warga">
+                                <select class="choices form-select" name="id_warga_1">
                                         @foreach($data as $warga)
                                     <option value="{{ $warga->id_warga }}">{{ $warga->nama_warga }}</option>
                                         @endforeach

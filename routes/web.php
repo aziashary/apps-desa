@@ -77,11 +77,14 @@ Route::group(['prefix' => 'admindesa', 'middleware' => 'isAdmin'], function () {
 
         Route::group(['prefix' => 'warga'], function () {
     Route::get('/', [WargaController::class, 'index']);
+    Route::get('/kartu-keluarga', [WargaController::class, 'kk']);
     Route::get('/create', [WargaController::class, 'create']);
     Route::post('/store', [WargaController::class, 'store']);
     Route::get('/edit/{id_warga}', [WargaController::class, 'edit']);
+    Route::get('/editkk/{no_kk}', [WargaController::class, 'editkk']);
     Route::get('/delete/{id_warga}', [Wargacontroller::class, 'delete']);
     Route::patch('/update/{id_warga}', [WargaController::class, 'update']);
+    Route::patch('/updatekk/{no_kk}', [WargaController::class, 'updatekk']);
         });
 
          Route::group(['prefix' => 'akun'], function () {
@@ -93,38 +96,37 @@ Route::group(['prefix' => 'admindesa', 'middleware' => 'isAdmin'], function () {
     Route::patch('/updatewarga/{id_warga}', [AkunController::class, 'updatewarga']);
         });
 
-        Route::group(['prefix' => 'SKKM'], function () {
-    Route::get('/', [SKKMController::class, 'index']);
-    Route::get('/create', [SKKMController::class, 'create']);
-    Route::post('/store', [SKKMController::class, 'store']);
-    Route::get('/print/{id_skkm}', [SKKMController::class, 'print']);
-    Route::get('/edit/{id_skkm}', [SKKMController::class, 'edit']);
-    Route::get('/delete/{id_skkm}', [SKKMController::class, 'delete']);
-    Route::patch('/update/{id_skkm}', [SKKMController::class, 'update']);
-        });
-
-        Route::group(['prefix' => 'SK'], function () {
-    Route::get('/', [SKcontroller::class, 'index']);
-    Route::get('/create', [SKcontroller::class, 'create']);
-    Route::get('/pengajuan', [SKcontroller::class, 'pengajuan']);
-    Route::get('/pengajuan_baru', [SKcontroller::class, 'pengajuan_baru']);
-    Route::patch('/detail/{id_pengajuan}', [SKcontroller::class, 'detail']);
-    Route::post('/store', [SKcontroller::class, 'store']);
-    Route::post('/print', [SKcontroller::class, 'print']);
-    Route::get('/edit/{id_sk}', [SKcontroller::class, 'edit']);
-    Route::get('/delete/{id_sk}', [SKcontroller::class, 'delete']);
-    Route::patch('/update/{id_sk}', [SKcontroller::class, 'update']);
-        });
+    //     Route::group(['prefix' => 'SKKM'], function () {
+    // Route::get('/', [SKKMController::class, 'index']);
+    // Route::get('/create', [SKKMController::class, 'create']);
+    // Route::post('/store', [SKKMController::class, 'store']);
+    // Route::get('/print/{id_skkm}', [SKKMController::class, 'print']);
+    // Route::get('/edit/{id_skkm}', [SKKMController::class, 'edit']);
+    // Route::get('/delete/{id_skkm}', [SKKMController::class, 'delete']);
+    // Route::patch('/update/{id_skkm}', [SKKMController::class, 'update']);
+    //     });
 
         Route::group(['prefix' => 'kodesk'], function () {
     Route::get('/', [Kodeskcontroller::class, 'index']);
-    Route::get('/editsk/{kodesk}', [Kodeskcontroller::class, 'editsk']);
+    Route::get('/editsk/{id_kodesk}', [Kodeskcontroller::class, 'editsk']);
     Route::get('/edit/{id_kodesk}', [Kodeskcontroller::class, 'edit']);
     Route::get('/create', [Kodeskcontroller::class, 'create']);
     Route::get('/getketerangan', [Kodeskcontroller::class, 'getketerangan']);
     Route::post('/store', [Kodeskcontroller::class, 'store']);
     Route::patch('/update/{id_kodesk}', [Kodeskcontroller::class, 'update']);
-    Route::patch('/updatesk/{kodesk}', [Kodeskcontroller::class, 'updatesk']);
+    Route::patch('/updatesk/{id_kodesk}', [Kodeskcontroller::class, 'updatesk']);
+    Route::get('/delete/{id_kodesk}', [Kodeskcontroller::class, 'delete']);
+        });
+
+        Route::group(['prefix' => 'kodesk'], function () {
+    Route::get('/', [Kodeskcontroller::class, 'index']);
+    Route::get('/editsk/{id_kodesk}', [Kodeskcontroller::class, 'editsk']);
+    Route::get('/edit/{id_kodesk}', [Kodeskcontroller::class, 'edit']);
+    Route::get('/create', [Kodeskcontroller::class, 'create']);
+    Route::get('/getketerangan', [Kodeskcontroller::class, 'getketerangan']);
+    Route::post('/store', [Kodeskcontroller::class, 'store']);
+    Route::patch('/update/{id_kodesk}', [Kodeskcontroller::class, 'update']);
+    Route::patch('/updatesk/{id_kodesk}', [Kodeskcontroller::class, 'updatesk']);
         });
 
         Route::group(['prefix' => 'sejarah'], function () {

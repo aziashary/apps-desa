@@ -7,7 +7,7 @@
     @yield('judul')
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset ('plugin/img/favicon/favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset ('template/foto/logo.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

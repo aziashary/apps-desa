@@ -75,42 +75,33 @@ class DashboardwargaController extends Controller
 
     // Menghasilkan form input otomatis berdasarkan nilai jenis_sk_id
     $kodesk = Kodesk::where('kode_sk', $jenisSkId)->first();
+    $data = Warga::orderBy('nama_warga', 'ASC')->get();
 
-    $formInput = '';
+    $keteranganKodesk = json_decode($kodesk->keterangan_kodesk, true);
+
+    if ($kodesk->jumlah_warga == 2) {
+        $formInput = "<h6>Nama Warga Kedua</h6>
+        <div class='form-group'>
+            <select class='choices form-select' name='id_warga_2'>";
+        
+        foreach ($data as $warga) {
+            $formInput .= "<option value='{$warga->id_warga}'>{$warga->nama_warga}</option>";
+        }
+        
+        $formInput .= "</select></div><br>";
+    } else {
+        $formInput = "";
+    }
 
     // Surat
-        $formInput = "<h6> {$kodesk->keterangan_1} </h6>
-                        <small class='text-muted'><i>Maks. 100 Karakter</i></small>
-                        <div class='form-group'>
-                            <input type='text' class='form-control' id='keterangan_1' name='keterangan_1' maxlength='100' required>
-                        </div>
-                    <br>";
-
-                    if ($kodesk->keterangan_2) {
-                        $formInput .= "
-                            <h6>{$kodesk->keterangan_2}</h6>
-                            <small class='text-muted'><i>Maks. 100 Karakter</i></small>
-                            <div class='form-group'>
-                                <input type='text' class='form-control' id='keterangan_2' name='keterangan_2'  maxlength='100' required>
-                            </div>
-                            <br>";
-                    } if ($kodesk->keterangan_3) {
-                        $formInput .= "
-                            <h6>{$kodesk->keterangan_3}</h6>
-                            <small class='text-muted'><i>Maks. 100 Karakter</i></small>
-                            <div class='form-group'>
-                                <input type='text' class='form-control' id='keterangan_3' name='keterangan_3'  maxlength='100' required>
-                            </div>
-                            <br>";
-                    } if ($kodesk->keterangan_4) {
-                        $formInput .= "
-                            <h6>{$kodesk->keterangan_4}</h6>
-                            <small class='text-muted'><i>Maks. 100 Karakter</i></small>
-                            <div class='form-group'>
-                                <input type='text' class='form-control' id='keterangan_4' name='keterangan_4'  maxlength='100' required>
-                            </div>
-                            <br>";
-                    }
+        foreach ($keteranganKodesk as $key => $value) {
+    $formInput .= "<h6>$value</h6>
+        <small class='text-muted'><i>Maks. 100 Karakter</i></small>
+        <div class='form-group'>
+            <input type='text' class='form-control' id='$key' name='$key' value='' maxlength='100' required>
+        </div>
+        <br>";
+    }
     
 
     return $formInput; // Mengirimkan form input otomatis sebagai respons

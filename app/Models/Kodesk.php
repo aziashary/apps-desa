@@ -16,10 +16,8 @@ class Kodesk extends Model
         'kode_sk',
         'jenis_sk',
         'singkatan_sk',
-        'keterangan_1',
-        'keterangan_2',
-        'keterangan_3',
-        'keterangan_4',
+        'jumlah_warga',
+        'keterangan_kodesk',
         'file_name',
         'url_print'
 
@@ -27,6 +25,6 @@ class Kodesk extends Model
 
     public function kets()
     {
-        return $this->hasOne('App\Models\Keterangansk', 'kode_sk', 'kode_sk');
+        return $this->hasOne('App\Models\Keterangansk', 'id_kodesk', 'id_kodesk');
     }
 }

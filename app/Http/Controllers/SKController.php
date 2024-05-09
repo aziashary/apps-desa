@@ -11,9 +11,11 @@ use App\Models\Kodesk;
 use App\Models\Warga;
 use App\Models\Aparaturdesa;
 use App\Models\Pengajuan;
-use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Settings;
 use PhpOffice\PhpSpreadsheet\Writer\Html;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Pdf\Tcpdf;
 
 class SKController extends Controller
 {
@@ -118,11 +120,120 @@ class SKController extends Controller
     // Retrieve data from the database using Laravel's query builder
     // Data SK
     $item = SK::where('id_sk', $request->id_sk)->with('wargas')->first();
+    $kets = Keterangansk::where('id_kodesk', $data->id_kodesk)->first();
+    $aparatur = Aparaturdesa::where('id_aparatur', $request->ttd_kepala)->first();
+
+    $keterangankodesk = json_decode($kets->keterangan, true);
+    $detailkodesk = json_decode($kets->detail_keterangansk, true);
+    $detailsk = json_decode($item->keterangan_sk, true);
+    
+    // Keterangan SK
+    
+
+    // Insert the data into the appropriate cells in the XLS file
+    if (!empty($detailkodesk['no_sk'])) {
+        $worksheet->setCellValue($detailkodesk['no_sk'], $item->no_sk);
+    }
+    
+    if (!empty($detailkodesk['warga'][0]['nama_warga'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][0]['nama_warga'], $item->wargas->nama_warga);
+    }
+
+    if (!empty($detailkodesk['warga'][0]['tanggal_lahir'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][0]['tanggal_lahir'], date('d-m-Y', strtotime($item->wargas->tanggal_lahir)));
+    }
+
+    if (!empty($detailkodesk['warga'][0]['tempat_lahir'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][0]['tempat_lahir'], $item->wargas->tempat_lahir);
+    }
+    
+    if (!empty($detailkodesk['warga'][0]['nik'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][0]['nik'], $item->wargas->nik);
+    }
+    
+    if (!empty($detailkodesk['warga'][0]['jenis_pekerjaan'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][0]['jenis_pekerjaan'], $item->wargas->jenis_pekerjaan);
+    }
+    
+    if (!empty($detailkodesk['warga'][0]['agama'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][0]['agama'], $item->wargas->agama);
+    }
+    
+    if (!empty($detailkodesk['warga'][0]['alamat'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][0]['alamat'], $item->wargas->alamat);
+    }
+    
+    for ($i = 1; $i <= 20; $i++) {
+        $kunci = "keterangan_$i";
+    
+        if (!empty($keterangankodesk[$kunci]) && !empty($detailsk[$kunci])) {
+            $worksheet->setCellValue($keterangankodesk[$kunci], $detailsk[$kunci]);
+        }
+    }
+    
+    
+    if (!empty($detailkodesk['tanggal'])) {
+    $worksheet->setCellValue($detailkodesk['tanggal'], date('d-m-Y', strtotime($item->created_at)));
+    }
+
+    if (!empty($detailkodesk['ttd_kepala'])) {
+        $worksheet->setCellValue($detailkodesk['ttd_kepala'], $aparatur->nama_aparatur);
+    }
+
+    if (!empty($detailkodesk['jabatan'])) {
+        $worksheet->setCellValue($detailkodesk['jabatan'], $aparatur->nama_jabatan);
+    }
+    
+    if (!empty($detailkodesk['ttd_pengaju'])) {
+        $worksheet->setCellValue($detailkodesk['ttd_pengaju'], $item->wargas->nama_warga);
+    }
+    
+    
+
+
+    // Convert the Excel file to HTML
+    $writer = new Html($spreadsheet);
+    $writer->save('plugin\file.html');
+
+    // Set the headers to display the HTML directly in the browser
+    header('Content-Type: text/html; charset=utf-8');
+    header('Content-Disposition: inline; filename="file.html"');
+    header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+
+    // Output the HTML file to the browser
+    echo '<!DOCTYPE html>
+          <html>
+            <head>
+              <title>Print SKU</title>
+            </head>
+            <body onload="window.print();">';
+    echo file_get_contents('plugin\file.html');
+    echo '</body>
+          </html>';
+}
+
+    function excel(Request $request)
+    { 
+    //  $data = SK::where('id_sk', $id_sk)->with('wargas')->get();
+    //  return view('sk.print', compact('data'));
+
+    // Load the XLS file
+    $data = SK::where('id_sk', $request->id_sk)->with('sks')->first();
+    $inputFileType = 'Xls';
+    $inputFileName = public_path($data->sks->url_print);
+    $spreadsheet = IOFactory::load($inputFileName);
+
+    // Get the active sheet of the XLS file
+    $worksheet = $spreadsheet->getActiveSheet();
+
+    // Retrieve data from the database using Laravel's query builder
+    // Data SK
+    $item = SK::where('id_sk', $request->id_sk)->with('wargas')->first();
     $kets = Keterangansk::where('kode_sk', $data->kode_sk)->first();
     $aparatur = Aparaturdesa::where('id_aparatur', $request->ttd_kepala)->first();
     
     // Keterangan SK
-    
+    $namafile = $data->sks->singkatan_sk . ' - ' . $item->wargas->nama_warga . ' - ' . $item->no_sk;
 
     // Insert the data into the appropriate cells in the XLS file
     if (!empty($kets->no_sk)) {
@@ -192,28 +303,21 @@ class SKController extends Controller
     
 
 
-    // Convert the Excel file to HTML
-    $writer = new Html($spreadsheet);
-    $writer->save('plugin\file.html');
+    // Simpan file Excel yang telah diperbarui dalam memory
+    ob_start();
+    $writer = new Xls($spreadsheet);
+    $writer->save('php://output');
+    $excelData = ob_get_clean();
 
-    // Set the headers to display the HTML directly in the browser
-    header('Content-Type: text/html; charset=utf-8');
-    header('Content-Disposition: inline; filename="file.html"');
-    header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
+    // Set the appropriate headers for file download
+    $headers = [
+        'Content-Type' => 'application/vnd.ms-excel',
+        'Content-Disposition' => 'attachment; filename="' . $namafile . '.xls"',
+    ];
 
-    // Output the HTML file to the browser
-    echo '<!DOCTYPE html>
-          <html>
-            <head>
-              <title>Print SKU</title>
-            </head>
-            <body onload="window.print();">';
-    echo file_get_contents('plugin\file.html');
-    echo '</body>
-          </html>';
+    // Menggunakan response()->make() untuk mengirimkan file sebagai respons unduhan dari data yang disimpan dalam memory
+    return response()->make($excelData, 200, $headers);
 }
-
-    
 
     function edit($id_sk)
     {
@@ -230,6 +334,7 @@ class SKController extends Controller
 
     function store(Request $request)
     {
+        // Penentuan NO surat
         $MonthNow = date('M');
         $month_number = date("n",strtotime($MonthNow));
 
@@ -244,22 +349,59 @@ class SKController extends Controller
                 }
             }
         }
-        
 
         $yearNow = date('Y');
         $id_sk = SK::latest('id_sk')->select('id_sk')->value('id_sk');
         $no_sk = ($request->kode_sk)." /"."  ".($id_sk+1)."  "."/ ".$returnValue." / ".$yearNow;
-        $jenis_sk = Kodesk::where('kode_sk', $request->kode_sk)->pluck('jenis_sk')->first();
+        
+        // Array Keterangan
+        $keterangansk = [];
+        for ($i = 1; $i <= 100; $i++) {
+            $fieldName = "keterangan_$i";
+            $fieldValue = $request->$fieldName;
+            if ($fieldValue !== null) {
+                $keterangansk[$fieldName] = $fieldValue;
+            }
+        }
+
+        //Elemen yang diperlukan
+        $jenis_sk = Kodesk::where('kode_sk', $request->kode_sk)->first();
+        $warga_1 = Warga::where('id_warga', $request->id_warga_1)->first();
+        $warga_2 = Warga::where('id_warga', $request->id_warga_2)->first();
 
      $form_data = array(
       'no_sk'  => $no_sk,
       'kode_sk' => $request->kode_sk,
-      'jenis_sk' => $jenis_sk,
-      'id_warga'  => $request->id_warga,
-      'keterangan_1'  => $request->keterangan_1,
-      'keterangan_2'  => $request->keterangan_2,
-      'keterangan_3'  => $request->keterangan_3,
-      'keterangan_4'  => $request->keterangan_4,
+      'jenis_sk' => $jenis_sk->jenis_sk,
+      'id_kodesk' => $jenis_sk->id_kodesk,
+      'id_warga'  => $request->id_warga_1,
+      'detail_sk' => json_encode([
+        'no_sk' => $no_sk,
+        'warga' => [
+            [
+                'nik' => $warga_1->nik,
+                'nama_warga' => $warga_1->nama_warga,
+                'jenis_kelamin' => $warga_1->jenis_kelamin,
+                'tempat_lahir' => $warga_1->tempat_lahir,
+                'tanggal_lahir' => $warga_1->tanggal_lahir,
+                'alamat' => $warga_1->alamat,
+                'jenis_pekerjaan' => $warga_1->jenis_pekerjaan,
+                'agama' => $warga_1->agama,
+            ],
+            $warga_2 !== null ? [
+                'nik' => $warga_2->nik,
+                'nama_warga' => $warga_2->nama_warga,
+                'jenis_kelamin' => $warga_2->jenis_kelamin,
+                'tempat_lahir' => $warga_2->tempat_lahir,
+                'tanggal_lahir' => $warga_2->tanggal_lahir,
+                'alamat' => $warga_2->alamat,
+                'jenis_pekerjaan' => $warga_2->jenis_pekerjaan,
+                'agama' => $warga_2->agama,
+            ] : [],
+            // Tambahkan warga ketiga atau lebih jika diperlukan
+        ],
+    ]),
+      'keterangan_sk' => json_encode($keterangansk),
       
      );
 
@@ -294,12 +436,18 @@ class SKController extends Controller
         // $id_sk = SK::latest('id_sk')->select('id_sk')->value('id_sk');
         // $no_sk = "140"." /"."  ".($id_sk+1)."  "."/ ".$returnValue." / ".$yearNow;
 
+        $keterangansk = [];
+        for ($i = 1; $i <= 100; $i++) {
+            $fieldName = "keterangan_$i";
+            $fieldValue = $request->$fieldName;
+            if ($fieldValue !== null) {
+                $keterangansk[$fieldName] = $fieldValue;
+            }
+        }
+
      $form_data = array(
       'id_warga'  => $request->id_warga,
-      'keterangan_1'  => $request->keterangan_1,
-      'keterangan_2'  => $request->keterangan_2,
-      'keterangan_3'  => $request->keterangan_3,
-      'keterangan_4'  => $request->keterangan_4,
+      'keterangan_sk' => json_encode($keterangansk),
       
      );
 

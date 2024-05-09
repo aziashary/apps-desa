@@ -15,14 +15,13 @@ class CreateSkTable extends Migration
     {
         Schema::create('sk', function (Blueprint $table) {
             $table->bigIncrements('id_sk');
+            $table->string('id_kodesk');
             $table->string('kode_sk');
             $table->string('jenis_sk');
             $table->string('no_sk')->unique();
             $table->string('id_warga');
-            $table->string('keterangan_1');
-            $table->string('keterangan_2')->nullable();
-            $table->string('keterangan_3')->nullable();
-            $table->string('keterangan_4')->nullable();
+            $table->json('detail_sk')->nullable();
+            $table->json('keterangan_sk');
             $table->timestamps();
         });
     }

@@ -13,14 +13,13 @@ class SK extends Model
     
     protected $fillable = [
         'id_sk',
+        'id_kodesk',
         'kode_sk',
         'jenis_sk',
         'no_sk',
         'id_warga',
-        'keterangan_1',
-        'keterangan_2',
-        'keterangan_3',
-        'keterangan_4'
+        'detail_sk',
+        'keterangan_sk'
     ];
 
     public function wargas()
@@ -29,10 +28,10 @@ class SK extends Model
     }
     public function sks()
     {
-        return $this->hasOne('App\Models\Kodesk', 'kode_sk', 'kode_sk');
+        return $this->hasOne('App\Models\Kodesk', 'id_kodesk', 'id_kodesk');
     }
     public function kets()
     {
-        return $this->hasOne('App\Models\Keterangansk', 'kode_sk', 'kode_sk');
+        return $this->hasOne('App\Models\Keterangansk', 'id_kodesk', 'id_kodesk');
     }
 }

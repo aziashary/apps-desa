@@ -20,35 +20,22 @@
             <div class="card">
                 <h4 class="card-header">Edit Template {{ $item->jenis_sk }} </h4>
                 <div class="card-body">
-                    <form method="POST" action="{{ url('admindesa/kodesk/updatesk/'. $item->kode_sk) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url('admindesa/kodesk/updatesk/'. $item->id_kodesk) }}" enctype="multipart/form-data">
                         @csrf {{ method_field('PATCH') }}
                         <div class="row">
                             <div class="card-body">
                                 <div class="mb-3 row">
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Nomor SK</b></label>
-                                      <div class="col-md-2">
-                                          <select class="choices form-select" name="no_sk">
-                                              @foreach($data as $datask)
-                                                <option value="{{ $datask->no_sk}}">{{ $datask->no_sk }}</option>
-                                                  @endforeach
-                                                <option value="">-Disable-</option>
-                                              <?php
-                                              for ($i=1; $i<=11; $i++) {
-                                                  for ($j=0; $j<50; $j++) {
-                                                      $char = chr(64 + $i);
-                                                      $value = $char . ($j+1);
-                                                      echo "<option value='{$value}'>{$value}</option>";
-                                                  }
-                                              }
-                                            ?>
-                                          </select>
-                                      </div>
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Nama</b></label>
-                                        <div class="col-md-2">
+                                    <div class="divider divider-dark">
+                                        <div class="divider-text">Data Warga 1</div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Nama</b></label>
+                                        <div class="col-md-3">
                                             <select class="choices form-select" name="nama_warga">
-                                                @foreach($data as $datask)
-                                                <option value="{{ $datask->nama_warga}}">{{ $datask->nama_warga }}</option>
-                                                    @endforeach
+                                                @if(isset($detailkodesk['warga'][0]['nama_warga']))
+                                                <option value="{{$detailkodesk['warga'][0]['nama_warga']}}">{{$detailkodesk['warga'][0]['nama_warga']}}</option>
+                                                @endif
                                                 <option value="">-Disable-</option>
                                                 <?php
                                                 for ($i=1; $i<=11; $i++) {
@@ -61,14 +48,13 @@
                                             ?>
                                             </select>
                                         </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>NIK</b></label>
-                                    <div class="col-md-2">
+                               
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>NIK</b></label>
+                                    <div class="col-md-3">
                                         <select class="choices form-select" name="nik">
-                                            @foreach($data as $datask)
-                                            <option value="{{ $datask->nik}}">{{ $datask->nik }}</option>
-                                                @endforeach
+                                            @if(isset($detailkodesk['warga'][0]['nik']))
+                                            <option value="{{$detailkodesk['warga'][0]['nik']}}">{{$detailkodesk['warga'][0]['nik']}}</option>
+                                            @endif
                                             <option value="">-Disable-</option>
                                             <?php
                                             for ($i=1; $i<=11; $i++) {
@@ -81,12 +67,14 @@
                                         ?>
                                         </select>
                                     </div>
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Tempat Lahir</b></label>
-                                      <div class="col-md-2">
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Tempat Lahir</b></label>
+                                      <div class="col-md-3">
                                           <select class="choices form-select" name="tempat_lahir">
-                                            @foreach($data as $datask)
-                                            <option value="{{ $datask->tempat_lahir}}">{{ $datask->tempat_lahir }}</option>
-                                                @endforeach
+                                            @if(isset($detailkodesk['warga'][0]['tempat_lahir']))
+                                            <option value="{{$detailkodesk['warga'][0]['tempat_lahir']}}">{{$detailkodesk['warga'][0]['tempat_lahir']}}</option>
+                                            @endif   
                                              <option value="">-Disable-</option>
                                               <?php
                                               for ($i=1; $i<=11; $i++) {
@@ -99,14 +87,13 @@
                                             ?>
                                           </select>
                                       </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Tanggal Lahir</b></label>
-                                    <div class="col-md-2">
+                                
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Tanggal Lahir</b></label>
+                                    <div class="col-md-3">
                                       <select class="choices form-select" name="tanggal_lahir">
-                                        @foreach($data as $datask)
-                                        <option value="{{ $datask->tanggal_lahir}}">{{ $datask->tanggal_lahir }}</option>
-                                            @endforeach
+                                        @if(isset($detailkodesk['warga'][0]['tanggal_lahir']))
+                                        <option value="{{$detailkodesk['warga'][0]['tanggal_lahir']}}">{{$detailkodesk['warga'][0]['tanggal_lahir']}}</option>
+                                        @endif    
                                          <option value="">-Disable-</option>
                                           <?php
                                           for ($i=1; $i<=11; $i++) {
@@ -119,12 +106,14 @@
                                         ?>
                                       </select>
                                     </div>
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Jenis Pekerjaan</b></label>
-                                      <div class="col-md-2">
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Jenis Pekerjaan</b></label>
+                                      <div class="col-md-3">
                                           <select class="choices form-select" name="jenis_pekerjaan">
-                                            @foreach($data as $datask)
-                                            <option value="{{ $datask->jenis_pekerjaan}}">{{ $datask->jenis_pekerjaan }}</option>
-                                                @endforeach
+                                            @if(isset($detailkodesk['warga'][0]['jenis_pekerjaan']))
+                                            <option value="{{$detailkodesk['warga'][0]['jenis_pekerjaan']}}">{{$detailkodesk['warga'][0]['jenis_pekerjaan']}}</option>
+                                            @endif    
                                              <option value="">-Disable-</option>
                                               <?php
                                               for ($i=1; $i<=11; $i++) {
@@ -137,14 +126,13 @@
                                             ?>
                                           </select>
                                       </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Agama</b></label>
-                                    <div class="col-md-2">
+                                
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Agama</b></label>
+                                    <div class="col-md-3">
                                       <select class="choices form-select" name="agama">
-                                        @foreach($data as $datask)
-                                        <option value="{{ $datask->agama}}">{{ $datask->agama }}</option>
-                                            @endforeach
+                                        @if(isset($detailkodesk['warga'][0]['agama']))
+                                        <option value="{{$detailkodesk['warga'][0]['agama']}}">{{$detailkodesk['warga'][0]['agama']}}</option>
+                                        @endif
                                          <option value="">-Disable-</option>
                                           <?php
                                           for ($i=1; $i<=11; $i++) {
@@ -157,12 +145,33 @@
                                         ?>
                                       </select>
                                     </div>
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Alamat</b></label>
-                                      <div class="col-md-2">
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Jenis Kelamin</b></label>
+                                    <div class="col-md-3">
+                                        <select class="choices form-select" name="jenis_kelamin">
+                                            @if(isset($detailkodesk['warga'][0]['jenis_kelamin']))
+                                          <option value="{{$detailkodesk['warga'][0]['jenis_kelamin']}}">{{$detailkodesk['warga'][0]['jenis_kelamin']}}</option>
+                                            @endif
+                                           <option value="">-Disable-</option>
+                                            <?php
+                                            for ($i=1; $i<=11; $i++) {
+                                                for ($j=0; $j<50; $j++) {
+                                                    $char = chr(64 + $i);
+                                                    $value = $char . ($j+1);
+                                                    echo "<option value='{$value}'>{$value}</option>";
+                                                }
+                                            }
+                                          ?>
+                                        </select>
+                                    </div>
+                              
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Alamat</b></label>
+                                      <div class="col-md-3">
                                           <select class="choices form-select" name="alamat">
-                                            @foreach($data as $datask)
-                                            <option value="{{ $datask->alamat}}">{{ $datask->alamat }}</option>
-                                                @endforeach
+                                            @if(isset($detailkodesk['warga'][0]['alamat']))
+                                            <option value="{{$detailkodesk['warga'][0]['alamat']}}">{{$detailkodesk['warga'][0]['alamat']}}</option>
+                                            @endif    
                                              <option value="">-Disable-</option>
                                               <?php
                                               for ($i=1; $i<=11; $i++) {
@@ -175,14 +184,204 @@
                                             ?>
                                           </select>
                                       </div>
+                            </div>
+                        @if ($item->jumlah_warga == 2)
+                            <div class="mb-3 row">
+                                <div class="divider divider-dark">
+                                    <div class="divider-text">Data Warga 2</div>
                                 </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Nama</b></label>
+                                    <div class="col-md-3">
+                                        <select class="choices form-select" name="nama_warga_2">
+                                            @if(isset($detailkodesk['warga'][1]['nama_warga']))
+                                            <option value="{{$detailkodesk['warga'][1]['nama_warga']}}">{{$detailkodesk['warga'][1]['nama_warga']}}</option>
+                                            @endif
+                                            <option value="">-Disable-</option>
+                                            <?php
+                                            for ($i=1; $i<=11; $i++) {
+                                                for ($j=0; $j<50; $j++) {
+                                                    $char = chr(64 + $i);
+                                                    $value = $char . ($j+1);
+                                                    echo "<option value='{$value}'>{$value}</option>";
+                                                }
+                                            }
+                                        ?>
+                                        </select>
+                                    </div>
+                           
+                                <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>NIK</b></label>
+                                <div class="col-md-3">
+                                    <select class="choices form-select" name="nik_2">
+                                        @if(isset($detailkodesk['warga'][1]['nik']))
+                                        <option value="{{$detailkodesk['warga'][1]['nik']}}">{{$detailkodesk['warga'][1]['nik']}}</option>
+                                        @endif
+                                        <option value="">-Disable-</option>
+                                        <?php
+                                        for ($i=1; $i<=11; $i++) {
+                                            for ($j=0; $j<50; $j++) {
+                                                $char = chr(64 + $i);
+                                                $value = $char . ($j+1);
+                                                echo "<option value='{$value}'>{$value}</option>";
+                                            }
+                                        }
+                                    ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Tempat Lahir</b></label>
+                                  <div class="col-md-3">
+                                      <select class="choices form-select" name="tempat_lahir_2">
+                                        @if(isset($detailkodesk['warga'][1]['tempat_lahir']))
+                                        <option value="{{$detailkodesk['warga'][1]['tempat_lahir']}}">{{$detailkodesk['warga'][1]['tempat_lahir']}}</option>
+                                        @endif   
+                                         <option value="">-Disable-</option>
+                                          <?php
+                                          for ($i=1; $i<=11; $i++) {
+                                              for ($j=0; $j<50; $j++) {
+                                                  $char = chr(64 + $i);
+                                                  $value = $char . ($j+1);
+                                                  echo "<option value='{$value}'>{$value}</option>";
+                                              }
+                                          }
+                                        ?>
+                                      </select>
+                                  </div>
+                            
+                                <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Tanggal Lahir</b></label>
+                                <div class="col-md-3">
+                                  <select class="choices form-select" name="tanggal_lahir_2">
+                                    @if(isset($detailkodesk['warga'][1]['tanggal_lahir']))
+                                    <option value="{{$detailkodesk['warga'][1]['tanggal_lahir']}}">{{$detailkodesk['warga'][1]['tanggal_lahir']}}</option>
+                                    @endif    
+                                     <option value="">-Disable-</option>
+                                      <?php
+                                      for ($i=1; $i<=11; $i++) {
+                                          for ($j=0; $j<50; $j++) {
+                                              $char = chr(64 + $i);
+                                              $value = $char . ($j+1);
+                                              echo "<option value='{$value}'>{$value}</option>";
+                                          }
+                                      }
+                                    ?>
+                                  </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Jenis Pekerjaan</b></label>
+                                  <div class="col-md-3">
+                                      <select class="choices form-select" name="jenis_pekerjaan_2">
+                                        @if(isset($detailkodesk['warga'][1]['jenis_pekerjaan']))
+                                        <option value="{{$detailkodesk['warga'][1]['jenis_pekerjaan']}}">{{$detailkodesk['warga'][1]['jenis_pekerjaan']}}</option>
+                                        @endif    
+                                         <option value="">-Disable-</option>
+                                          <?php
+                                          for ($i=1; $i<=11; $i++) {
+                                              for ($j=0; $j<50; $j++) {
+                                                  $char = chr(64 + $i);
+                                                  $value = $char . ($j+1);
+                                                  echo "<option value='{$value}'>{$value}</option>";
+                                              }
+                                          }
+                                        ?>
+                                      </select>
+                                  </div>
+                            
+                                <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Agama</b></label>
+                                <div class="col-md-3">
+                                  <select class="choices form-select" name="agama_2">
+                                    @if(isset($detailkodesk['warga'][1]['agama']))
+                                    <option value="{{$detailkodesk['warga'][1]['agama']}}">{{$detailkodesk['warga'][1]['agama']}}</option>
+                                    @endif
+                                     <option value="">-Disable-</option>
+                                      <?php
+                                      for ($i=1; $i<=11; $i++) {
+                                          for ($j=0; $j<50; $j++) {
+                                              $char = chr(64 + $i);
+                                              $value = $char . ($j+1);
+                                              echo "<option value='{$value}'>{$value}</option>";
+                                          }
+                                      }
+                                    ?>
+                                  </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Jenis Kelamin</b></label>
+                                <div class="col-md-3">
+                                    <select class="choices form-select" name="jenis_kelamin_2">
+                                        @if(isset($detailkodesk['warga'][1]['jenis_kelamin']))
+                                      <option value="{{$detailkodesk['warga'][1]['jenis_kelamin']}}">{{$detailkodesk['warga'][1]['jenis_kelamin']}}</option>
+                                        @endif
+                                       <option value="">-Disable-</option>
+                                        <?php
+                                        for ($i=1; $i<=11; $i++) {
+                                            for ($j=0; $j<50; $j++) {
+                                                $char = chr(64 + $i);
+                                                $value = $char . ($j+1);
+                                                echo "<option value='{$value}'>{$value}</option>";
+                                            }
+                                        }
+                                      ?>
+                                    </select>
+                                </div>
+                          
+                                <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Alamat</b></label>
+                                  <div class="col-md-3">
+                                      <select class="choices form-select" name="alamat_2">
+                                        @if(isset($detailkodesk['warga'][1]['alamat']))
+                                        <option value="{{$detailkodesk['warga'][1]['alamat']}}">{{$detailkodesk['warga'][1]['alamat']}}</option>
+                                        @endif    
+                                         <option value="">-Disable-</option>
+                                          <?php
+                                          for ($i=1; $i<=11; $i++) {
+                                              for ($j=0; $j<50; $j++) {
+                                                  $char = chr(64 + $i);
+                                                  $value = $char . ($j+1);
+                                                  echo "<option value='{$value}'>{$value}</option>";
+                                              }
+                                          }
+                                        ?>
+                                      </select>
+                                  </div>
+                            </div>
+                        @endif
+                            <div class="mb-3 row">
+                                <div class="divider divider-dark">
+                                    <div class="divider-text">Detail Surat</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <input type="hidden" name="kode_sk" value="{{ $item->kode_sk }}">
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Nomor SK</b></label>
+                                      <div class="col-md-3">
+                                          <select class="choices form-select" name="no_sk">
+                                            @if(isset($detailkodesk['no_sk']))
+                                                <option value="{{$detailkodesk['no_sk']}}">{{$detailkodesk['no_sk']}}</option>
+                                            @endif      
+                                                <option value="">-Disable-</option>
+                                              <?php
+                                              for ($i=1; $i<=11; $i++) {
+                                                  for ($j=0; $j<50; $j++) {
+                                                      $char = chr(64 + $i);
+                                                      $value = $char . ($j+1);
+                                                      echo "<option value='{$value}'>{$value}</option>";
+                                                  }
+                                              }
+                                            ?>
+                                          </select>
+                                      </div>
+                            </div>
                                 <div class="mb-3 row">
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Jabatan</b></label>
-                                        <div class="col-md-2">
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Jabatan</b></label>
+                                        <div class="col-md-3">
                                         <select class="choices form-select" name="jabatan">
-                                            @foreach($data as $datask)
-                                            <option value="{{ $datask->jabatan}}">{{ $datask->jabatan}}</option>
-                                                @endforeach
+                                            @if(isset($detailkodesk['jabatan']))
+                                            <option value="{{$detailkodesk['jabatan']}}">{{$detailkodesk['jabatan']}}</option>
+                                            @endif    
                                             <option value="">-Disable-</option>
                                             <?php
                                             for ($i=1; $i<=11; $i++) {
@@ -195,12 +394,12 @@
                                             ?>
                                         </select>
                                         </div>
-                                        <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Ttd Kepala Desa</b></label>
-                                        <div class="col-md-2">
+                                        <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Ttd Kepala Desa</b></label>
+                                        <div class="col-md-3">
                                         <select class="choices form-select" name="ttd_kepala">
-                                            @foreach($data as $datask)
-                                            <option value="{{ $datask->ttd_kepala}}">{{ $datask->ttd_kepala}}</option>
-                                                @endforeach
+                                            @if(isset($detailkodesk['ttd_kepala']))
+                                            <option value="{{$detailkodesk['ttd_kepala']}}">{{$detailkodesk['ttd_kepala']}}</option>
+                                            @endif   
                                             <option value="">-Disable-</option>
                                             <?php
                                             for ($i=1; $i<=11; $i++) {
@@ -215,12 +414,12 @@
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Tanggal Surat</b></label>
-                                    <div class="col-md-2">
+                                    <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Tanggal Surat</b></label>
+                                    <div class="col-md-3">
                                       <select class="choices form-select" name="tanggal">
-                                        @foreach($data as $datask)
-                                        <option value="{{ $datask->tanggal}}">{{ $datask->tanggal }}</option>
-                                            @endforeach
+                                        @if(isset($detailkodesk['tanggal']))
+                                        <option value="{{$detailkodesk['tanggal']}}">{{$detailkodesk['tanggal']}}</option>
+                                        @endif    
                                          <option value="">-Disable-</option>
                                           <?php
                                           for ($i=1; $i<=11; $i++) {
@@ -233,24 +432,24 @@
                                         ?>
                                       </select>
                                     </div>
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>Ttd Warga</b></label>
-                                    <div class="col-md-2">
-                                      <select class="choices form-select" name="ttd_pengaju">
-                                        @foreach($data as $datask)
-                                        <option value="{{ $datask->ttd_pengaju}}">{{ $datask->ttd_pengaju }}</option>
-                                            @endforeach
-                                         <option value="">-Disable-</option>
-                                          <?php
-                                          for ($i=1; $i<=11; $i++) {
-                                              for ($j=0; $j<50; $j++) {
-                                                  $char = chr(64 + $i);
-                                                  $value = $char . ($j+1);
-                                                  echo "<option value='{$value}'>{$value}</option>";
-                                              }
-                                          }
-                                        ?>
-                                      </select>
-                                    </div>
+                                        <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>Ttd Warga</b></label>
+                                        <div class="col-md-3">
+                                            <select class="choices form-select" name="ttd_pengaju">
+                                                @if(isset($detailkodesk['ttd_pengaju']))
+                                                <option value="{{ $detailkodesk['ttd_pengaju'] }}">{{ $detailkodesk['ttd_pengaju'] }}</option>
+                                                @endif
+                                                <option value="">-Disable-</option>
+                                                @for ($i = 1; $i <= 11; $i++)
+                                                    @for ($j = 0; $j < 50; $j++)
+                                                        @php
+                                                            $char = chr(64 + $i);
+                                                            $value = $char . ($j + 1);
+                                                        @endphp
+                                                        <option value="{{ $value }}">{{ $value }}</option>
+                                                    @endfor
+                                                @endfor
+                                            </select>
+                                        </div>
                                 </div>
                             </div>
                                 <div class="mb-3 row">
@@ -258,106 +457,44 @@
                                         <div class="divider-text">Keterangan SK</div>
                                     </div>
                                 </div>
+                                @foreach ($kodesk as $kodeskKey => $kodeskValue)
+                                    @foreach ($keterangankodesk as $key => $value)
+                                        @if ($key === $kodeskKey)
+                                            <div class="mb-4 row">
+                                                <label for="html5-text-input" class="col-md-2 col-form-label text-center"><b>{{ $kodeskValue}}</b></label>
+                                                <div class="col-md-7">
+                                                    <select class="choices form-select" name="{{ $key }}">
+                                                        <option value="{{ $value }}">{{ $value }}</option>
+                                                        <option value="">-Disable-</option>
+                                                        <?php
+                                                        for ($i = 1; $i <= 11; $i++) {
+                                                            for ($j = 0; $j < 50; $j++) {
+                                                                $char = chr(64 + $i);
+                                                                $hasil = $char . ($j + 1);
+                                                                echo "<option value='{$hasil}'>{$hasil}</option>";
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endforeach
 
-                                    <div class="mb-4 row">
-                                        <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>{{ $item->keterangan_1 }}</b></label>
-                                        <div class="col-md-7">
-                                            <select class="choices form-select" name="keterangan_1">
-                                                @foreach($data as $datask)
-                                                <option value="{{ $datask->keterangan_1}}">{{ $datask->keterangan_1 }}</option>
-                                                    @endforeach
-                                                 <option value="">-Disable-</option>
-                                                <?php
-                                                for ($i=1; $i<=11; $i++) {
-                                                    for ($j=0; $j<50; $j++) {
-                                                        $char = chr(64 + $i);
-                                                        $value = $char . ($j+1);
-                                                        echo "<option value='{$value}'>{$value}</option>";
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-4 row">
-                                      @foreach($data as $datask)
-                                    @if($datask->keterangan_2 !== null)
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>{{ $item->keterangan_2 }}</b></label>
-                                        <div class="col-md-7">
-                                          <select class="choices form-select" name="keterangan_2">
-                                            <option value="{{ $datask->keterangan_2}}">{{ $datask->keterangan_2 }}</option>
-                                            <option value="">-Disable-</option>
-                                            @for ($i = 1; $i <= 11; $i++)
-                                            @for ($j = 0; $j < 50; $j++)
-                                                <?php
-                                                $char = chr(64 + $i);
-                                                $value = $char . ($j + 1);
-                                                ?>
-                                                <option value="{{ $value }}">{{ $value }}</option>
-                                                @endfor
-                                            @endfor
-                                            </select>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-
-                                    <div class="mb-4 row">
-                                      @foreach($data as $datask)
-                                    @if($datask->keterangan_3 !== null)
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>{{ $item->keterangan_3 }}</b></label>
-                                        <div class="col-md-7">
-                                          <select class="choices form-select" name="keterangan_2">
-                                            <option value="{{ $datask->keterangan_3}}">{{ $datask->keterangan_3 }}</option>
-                                            <option value="">-Disable-</option>
-                                            @for ($i = 1; $i <= 11; $i++)
-                                            @for ($j = 0; $j < 50; $j++)
-                                                <?php
-                                                $char = chr(64 + $i);
-                                                $value = $char . ($j + 1);
-                                                ?>
-                                                <option value="{{ $value }}">{{ $value }}</option>
-                                                @endfor
-                                            @endfor
-                                            </select>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-
-                                    <div class="mb-2 row">
-                                      @foreach($data as $datask)
-                                    @if($datask->keterangan_4 !== null)
-                                    <label for="html5-text-input" class="col-md-3 col-form-label text-center"><b>{{ $item->keterangan_4}}</b></label>
-                                        <div class="col-md-7">
-                                          <select class="choices form-select" name="keterangan_2">
-                                            <option value="{{ $datask->keterangan_4}}">{{ $datask->keterangan_4 }}</option>
-                                            <option value="">-Disable-</option>
-                                            @for ($i = 1; $i <= 11; $i++)
-                                            @for ($j = 0; $j < 50; $j++)
-                                                <?php
-                                                $char = chr(64 + $i);
-                                                $value = $char . ($j + 1);
-                                                ?>
-                                                <option value="{{ $value }}">{{ $value }}</option>
-                                                @endfor
-                                            @endfor
-                                            </select>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
                             
                         </div>
+                        <p>*Untuk Menambahkan keterangan isi surat, bisa di-update di "Kode SK/Edit Detail SK" </p>
+                        <p>**Jika ingin menghapus data dalam print page, silahkan select -disabled- </p> 
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-success me-1 mb-1">Simpan</button>
+                                        <a href="{{ url('admindesa/kodesk') }}" class="btn btn-secondary">Cancel</a>
+                                    </div>
                     </div>
-                </div>
-                <p>*Untuk Menambahkan keterangan isi surat, bisa di-update di "Kode SK/Edit Detail SK" </p>
-                <p>**Jika ingin menghapus data dalam print page, silahkan select -disabled- </p> 
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-success me-1 mb-1">Simpan</button>
-                                <a href="{{ url('admindesa/kodesk') }}" class="btn btn-secondary">Cancel</a>
-                            </div>
+                
+             
+                        </div>
+                        
                         </form>
                         </div>
                     </div>

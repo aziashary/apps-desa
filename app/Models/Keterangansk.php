@@ -12,26 +12,14 @@ class Keterangansk extends Model
     
     protected $fillable = [
         'id_keterangansk',
+        'id_kodesk',
         'kode_sk',
-        'no_sk',
-        'nik',
-        'nama_warga',
-        'tempat_lahir',
-        'tanggal_lahir',
-        'alamat',
-        'jenis_pekerjaan',
-        'agama',
-        'keterangan_1',
-        'keterangan_2',
-        'keterangan_3',
-        'keterangan_4',
-        'tanggal',
-        'ttd_pengaju',
-        'ttd_kepala',
-        'jabatan',
+        'detail_keterangansk',
+        'keterangan',
     ]; 
     public function sks()
     {
-        return $this->hasOne('App\Models\Kodesk', 'kode_sk', 'kode_sk');
+        return $this->hasOne('App\Models\Kodesk', 'id_kodesk', 'id_kodesk');
     }
 }
+
