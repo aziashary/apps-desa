@@ -55,11 +55,14 @@
                                         name="jumlah_keterangan"
                                         aria-label="Multiple select example"
                                         >
-                                        <option value="" selected>Satu Keterangan</option>
+                                        <option value="1" selected>Satu Keterangan</option>
                                         <option value="2">Dua Keterangan</option>
                                         <option value="3">Tiga Keterangan</option>
                                         <option value="4">Empat Keterangan</option>
                                         <option value="5">Lima Keterangan</option>
+                                        <option value="6">Enam Keterangan</option>
+                                        <option value="7">Tujuh Keterangan</option>
+                                        <option value="8">Delapan Keterangan</option>
                                         </select>
                                       </div>
                                 </div>

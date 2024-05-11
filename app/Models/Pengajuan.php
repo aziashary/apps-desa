@@ -18,10 +18,12 @@ class Pengajuan extends Model
         'no_pengajuan',
         'id_warga',
         'status_pengajuan',
-        'keterangan_1',
-        'keterangan_2',
-        'keterangan_3',
-        'keterangan_4'
+        'detail_pengajuan',
+        'keterangan_pengajuan',
+        'berkas_1',
+        'berkas_2',
+        'berkas_3',
+
     ];
 
     public function wargas()

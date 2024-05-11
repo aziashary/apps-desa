@@ -5,6 +5,13 @@
 @push('css')
 <link rel="stylesheet" href="{{ asset ('assets/extensions/simple-datatables/style.css') }}">
 <link rel="stylesheet" href="{{ asset ('assets/css/pages/simple-datatables.css') }}">
+<style>
+    .custom-img {
+        width: 300px;
+        height: 300px;
+        /* Opsional: atur properti lain sesuai kebutuhan */
+    }
+</style>
 @endpush
 @section('content')
 
@@ -89,10 +96,10 @@
 
 @foreach($data as $pengajuan)
 <!-- Modal -->
-<div class="modal fade" id="confirmModal{{ $pengajuan->id_pengajuan }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
+<div class="modal fade" id="confirmModal{{ $pengajuan->id_pengajuan }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Approval Pengajuan Surat Keterangan</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -103,6 +110,8 @@
             <div class="form-group">
                 <input type="text" class="form-control" id="nama_warga" name="nama_warga" value="{{ $pengajuan->wargas->nama_warga }}"  maxlength="100" readonly>
                 <input type="hidden" class="form-control" id="id_warga" name="id_warga" value="{{ $pengajuan->id_warga }}"  maxlength="100" readonly>
+                <input type="hidden" class="form-control" id="id_pengajuan" name="id_pengajuan" value="{{ $pengajuan->id_pengajuan }}"  maxlength="100" readonly>
+                <input type="hidden" class="form-control" id="no_pengajuan" name="no_pengajuan" value="{{ $pengajuan->no_pengajuan }}"  maxlength="100" readonly>
             </div>
             <br>
             <h6>Jenis Surat Keterangan:</h6>
@@ -112,15 +121,36 @@
             </div>
             <br>
             {{-- Keterangan --}}
-            @if(isset($pengajuan->sks->keterangan_1) && !empty($pengajuan->sks->keterangan_1))
-                <h6>{{ $pengajuan->sks->keterangan_1 }}</h6>
+            @foreach($pengajuan->keterangan_pengajuan as $key => $value)
+                <h6><label for="{{ $key }}"><b>{{ ucwords(str_replace('_', ' ', $key)) }}</b></label></h6>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="keterangan_1" name="keterangan_1"  value="{{ $pengajuan->keterangan_1}}"  maxlength="100" readonly>
+                    <input type="text" class="form-control" id="{{ $key }}" name="{{ $key }}" value="{{ $value }}" required>
                 </div>
                 <br>
-            @endif
+            @endforeach
 
-            @if(isset($pengajuan->sks->keterangan_2) && !empty($pengajuan->sks->keterangan_2))
+            <h6>KTP:</h6>
+            <div class="form-group">
+                <img src="{{ asset($pengajuan->berkas_1) }}"  class="custom-img">
+            </div>
+
+            <br>
+
+            <h6>KK:</h6>
+            <div class="form-group">
+                <img src="{{ asset($pengajuan->berkas_2) }}"  class="custom-img">
+            </div>
+
+            <br>
+
+            <h6>Surat Pengantar:</h6>
+            <div class="form-group">
+                <img src="{{ asset($pengajuan->berkas_3) }}"  class="custom-img">
+            </div>
+
+            <br>
+
+            {{-- @if(isset($pengajuan->sks->keterangan_2) && !empty($pengajuan->sks->keterangan_2))
                 <h6>{{ $pengajuan->sks->keterangan_2 }}</h6>
                 <div class="form-group">
                     <input type="text" class="form-control" id="keterangan_2" name="keterangan_2"  value="{{ $pengajuan->keterangan_2}}"  maxlength="100" readonly>
@@ -142,7 +172,7 @@
                     <input type="text" class="form-control" id="keterangan_4" name="keterangan_4"  value="{{ $pengajuan->keterangan_4}}"  maxlength="100" readonly>
                 </div>
                 <br>
-            @endif
+            @endif --}}
             
             
             <h6>Keputusan Pengajuan Surat</h6>

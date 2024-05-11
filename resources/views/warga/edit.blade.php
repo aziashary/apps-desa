@@ -57,7 +57,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="tanggal_lahir"><strong> Tanggal Lahir : </strong></label>
-                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ $warga->tanggal_lahir }}">
+                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ $warga->tanggal_lahir }}" required>
                             </div>
                         </div>
 

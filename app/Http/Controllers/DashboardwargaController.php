@@ -119,40 +119,108 @@ class DashboardwargaController extends Controller
 
     function store(Request $request)
     {
-        $MonthNow = date('M');
-        $month_number = date("n",strtotime($MonthNow));
+        $request->validate([
+            'berkas_1' => 'required|file|max:2048', // Berkas 1 wajib diunggah dan maksimum 2MB
+            'berkas_2' => 'file|max:2048', // Berkas 2 maksimum 2MB (opsional)
+            'berkas_3' => 'file|max:2048', // Berkas 3 maksimum 2MB (opsional)
+        ]);
 
-        $map = array('X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+        $MonthNow = date('m'); // Ambil bulan saat ini dalam format angka (01 - 12)
+        $yearNow = date('Y'); // Ambil tahun saat ini
+
+// Mendapatkan angka bulan dalam format Romawi
+        $map = array(
+            'XII' => 12, 'XI' => 11, 'X' => 10, 'IX' => 9, 'VIII' => 8, 'VII' => 7,
+            'VI' => 6, 'V' => 5, 'IV' => 4, 'III' => 3, 'II' => 2, 'I' => 1
+        );
+
         $returnValue = '';
-        while ($month_number > 0) {
         foreach ($map as $roman => $int) {
-            if($month_number >= $int) {
-                $month_number -= $int;
-                $returnValue .= $roman;
+            if ($MonthNow == $int) {
+                $returnValue = $roman;
                 break;
-                }
             }
         }
-        
 
-        $yearNow = date('Y');
+        // Mendapatkan nomor urutan pengajuan terakhir
         $id_pengajuan = Pengajuan::latest('id_pengajuan')->select('id_pengajuan')->value('id_pengajuan');
-        $no_pengajuan = "PNG"." /"."  ".($id_pengajuan+1)."  "."/ ".$returnValue." / ".$yearNow;
+
+        // Membuat nomor pengajuan baru dengan format yang diinginkan
+        $no_pengajuan = "PNG-" . ($id_pengajuan + 1) . $yearNow . date('dm');
         $jenis_sk = Kodesk::where('kode_sk', $request->kode_sk)->pluck('jenis_sk')->first();
 
-        $username = auth()->user()->username;
-        $id_warga= Warga::where('nik', $username)->pluck('id_warga')->first();
+        // Array Keterangan
+        $keterangansk = [];
+        for ($i = 1; $i <= 100; $i++) {
+            $fieldName = "keterangan_$i";
+            $fieldValue = $request->$fieldName;
+            if ($fieldValue !== null) {
+                $keterangansk[$fieldName] = $fieldValue;
+            }
+        }
+
+        $warga_1 = Warga::where('id_warga', $request->id_warga_1)->first();
+        $warga_2 = Warga::where('id_warga', $request->id_warga_2)->first();
+        
+        if ($request->hasFile('berkas_1')) {
+            $berkas1 = $request->file('berkas_1');
+            $namaBerkas1 = $berkas1->getClientOriginalName(); // Menambahkan ID warga ke dalam nama file
+            $berkas1->move(public_path('plugin\berkas'), $namaBerkas1);
+            $url_berkas_1 = "plugin\\berkas\\". $namaBerkas1 ;
+        }
+
+        // Meng-handle upload berkas 2 (opsional)
+        if ($request->hasFile('berkas_2')) {
+            $berkas2 = $request->file('berkas_2');
+            $namaBerkas2 = $berkas2->getClientOriginalName(); // Menambahkan ID warga ke dalam nama file
+            $berkas2->move(public_path('plugin\berkas'), $namaBerkas2);
+            $url_berkas_2 = "plugin\\berkas\\". $namaBerkas2 ;
+        }
+
+        // Meng-handle upload berkas 3 (opsional)
+        if ($request->hasFile('berkas_3')) {
+            $berkas3 = $request->file('berkas_3');
+            $namaBerkas3 = $berkas3->getClientOriginalName(); // Menambahkan ID warga ke dalam nama file
+            $berkas3->move(public_path('plugin\berkas'), $namaBerkas3);
+            $url_berkas_3 = "plugin\\berkas\\". $namaBerkas3 ;
+        }
 
      $form_data = array(
       'no_pengajuan'  => $no_pengajuan,
       'kode_sk' => $request->kode_sk,
-      'id_warga'  => $id_warga,
+      'id_warga'  =>  $warga_1->id_warga,
       'jenis_pengajuan' => $jenis_sk,
       'status_pengajuan' => 'Process',
-      'keterangan_1'  => $request->keterangan_1,
-      'keterangan_2'  => $request->keterangan_2,
-      'keterangan_3'  => $request->keterangan_3,
-      'keterangan_4'  => $request->keterangan_4,
+      'detail_pengajuan' => json_encode([
+        'no_pengajuan' => $no_pengajuan,
+        'warga' => [
+            [
+                'nik' => $warga_1->nik,
+                'nama_warga' => $warga_1->nama_warga,
+                'jenis_kelamin' => $warga_1->jenis_kelamin,
+                'tempat_lahir' => $warga_1->tempat_lahir,
+                'tanggal_lahir' => $warga_1->tanggal_lahir,
+                'alamat' => $warga_1->alamat,
+                'jenis_pekerjaan' => $warga_1->jenis_pekerjaan,
+                'agama' => $warga_1->agama,
+            ],
+            $warga_2 !== null ? [
+                'nik' => $warga_2->nik,
+                'nama_warga' => $warga_2->nama_warga,
+                'jenis_kelamin' => $warga_2->jenis_kelamin,
+                'tempat_lahir' => $warga_2->tempat_lahir,
+                'tanggal_lahir' => $warga_2->tanggal_lahir,
+                'alamat' => $warga_2->alamat,
+                'jenis_pekerjaan' => $warga_2->jenis_pekerjaan,
+                'agama' => $warga_2->agama,
+            ] : [],
+            // Tambahkan warga ketiga atau lebih jika diperlukan
+        ],
+    ]),
+    'keterangan_pengajuan' => json_encode($keterangansk),
+    'berkas_1' => $url_berkas_1,
+    'berkas_2' => $url_berkas_2,
+    'berkas_3' => $url_berkas_3,
       
      );
 

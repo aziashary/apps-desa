@@ -25,17 +25,17 @@
                         @csrf
                     <div class="row">
                         <div class="col-md-12 mb-4">
-                            <h6>Nama Warga / yang Mengajukan Surat</h6>
+                            <h6>Nama Warga / yang Mengajukan Surat*</h6>
                             <div class="form-group">
-                                <select class="choices form-select" name="id_warga">
+                                <select class="choices form-select" name="id_warga_1">
                                         @foreach($data as $warga)
                                     <option value="{{ $warga->id_warga }}">{{ $warga->nama_warga }}</option>
                                         @endforeach
-                                </select>
+                            </select>
                             </div>
                         </div>
                         <div class="col-md-12 mb-4">
-                            <h6>Jenis Surat yang diajukan</h6>
+                            <h6>Jenis Surat yang diajukan*</h6>
                             <div class="form-group">
                                 <select class="choices form-select" id="kode_sk" name="kode_sk" required>
                                     <option value="">-- Pilih Keterangan Surat --</option>
@@ -71,6 +71,24 @@
                                     <input type="text" class="form-control" id="keterangan_4" name="keterangan_4"  maxlength="100" >
                                 </div>
                             <br> --}}
+                            <div class="col-md-12 mb-4">
+                                <h6>KTP*</h6>
+                                <div class="form-group">
+                                    <input type="file" name='berkas_1' required>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <h6>KK</h6>
+                                <div class="form-group">
+                                    <input type="file" name='berkas_2' required>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <h6>Surat Pengantar</h6>
+                                <div class="form-group">
+                                    <input type="file" name='berkas_3' required>
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-success me-1 mb-1">Submit</button>
                             <button class="btn btn-secondary  me-1 mb-1" href="{{ url('dashboardwarga/pengajuan') }}">Cancel</button>
                         </div>

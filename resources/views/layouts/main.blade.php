@@ -109,7 +109,7 @@
                 </g>
               </svg> --}}
             </span>
-            <span class="demo menu-text fw-bolder ms-2">Ciaruteun Ilir</span>
+            <span class="demo menu-text fw-bolder ms-2">Cimanggu I</span>
           </a>
 
           <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -322,7 +322,7 @@
           </div>
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-            <span class="fw-bolder" style="width: 100%;">Admin Pelayanan Desa Ciaruteun Ilir</span>
+            <span class="fw-bolder" style="width: 100%;">Admin Pelayanan Desa Cimanggu I</span>
             <!-- Search -->
             {{-- <div class="navbar-nav align-items-center">
               <div class="nav-item d-flex align-items-center">

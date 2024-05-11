@@ -49,80 +49,20 @@ class KodeskController extends Controller
     // Menghasilkan form input otomatis berdasarkan nilai jenis_sk_id
     $formInput = '';
 
-    // Surat
-                    if ($keteranganId == 2) {
-                        $formInput .= '
-                        
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 2</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_2" name="keterangan_2" placeholder="Keterangan 2" required>
-                            </div>
-                        </div>';
-                    } elseif ($keteranganId == 3) {
-                        $formInput .= '
-                        
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 2</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_2" name="keterangan_2" placeholder="Keterangan 2" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 3</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_3" name="keterangan_3" placeholder="Keterangan 3" required>
-                            </div>
-                        </div>';
-                    } elseif ($keteranganId == 4) {
-                        $formInput .= '
-                        
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 2</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_2" name="keterangan_2" placeholder="Keterangan 2" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 3</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_3" name="keterangan_3" placeholder="Keterangan 3" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 4</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_4" name="keterangan_4" placeholder="Keterangan 4" required>
-                            </div>
-                        </div>';
-                    } elseif ($keteranganId == 5) {
-                        $formInput .= '
-                        
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 2</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_2" name="keterangan_2" placeholder="Keterangan 2" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 3</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_3" name="keterangan_3" placeholder="Keterangan 3" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 4</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_4" name="keterangan_4" placeholder="Keterangan 4" required>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                        <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan 5</b></label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="keterangan_5" name="keterangan_5" placeholder="Keterangan 5" required>
-                            </div>
-                        </div>';
-                    }
+// Tentukan jumlah keterangan berdasarkan nilai $keteranganId
+$jumlahKeterangan = $keteranganId;
+
+// Loop untuk membuat blok HTML sesuai dengan jumlah keterangan
+for ($i = 2; $i <= $jumlahKeterangan; $i++) {
+    $formInput .= '
+        <div class="mb-3 row">
+            <label for="html5-text-input" class="col-md-4 col-form-label text-center"><b>Keterangan ' . $i . '</b></label>
+            <div class="col-md-7">
+                <input type="text" class="form-control" id="keterangan_' . $i . '" name="keterangan_' . $i . '" placeholder="Keterangan ' . $i . '" required>
+            </div>
+        </div>';
+}
+
     
 
     return $formInput; // Mengirimkan form input otomatis sebagai respons
@@ -216,7 +156,7 @@ class KodeskController extends Controller
             $namafile = $file->getClientOriginalName();
             $request->file->move(public_path('plugin/xls'),$namafile);
             $url = "plugin\\xls\\". $namafile;
-        }
+        
 
         $form_data = array(
             'kode_sk'  => $request->kode_sk,
@@ -228,6 +168,15 @@ class KodeskController extends Controller
             'keterangan_kodesk' => json_encode($keteranganKodesk),
               
            );
+        } else {
+            $form_data = array(
+                'kode_sk'  => $request->kode_sk,
+                'jenis_sk'  => $request->jenis_sk,
+                'singkatan_sk'  => $request->singkatan_sk,
+                'jumlah_warga' => $request->jumlah_warga,
+                'keterangan_kodesk' => json_encode($keteranganKodesk),
+               );
+        }
 
         $kode=Kodesk::where('id_kodesk', $id_kodesk)->update($form_data);
 

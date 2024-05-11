@@ -47,6 +47,9 @@ class SKController extends Controller
         $data = Pengajuan::where('status_pengajuan', 'Process')
             ->orderBy('created_at', 'DESC')
             ->with('wargas')->get();
+            foreach ($data as $pengajuan) {
+                $pengajuan->keterangan_pengajuan = json_decode($pengajuan->keterangan_pengajuan, true);
+            }
         return view('sk.pengajuan_baru', compact('data'));
     }
 
@@ -80,16 +83,18 @@ class SKController extends Controller
             $yearNow = date('Y');
             $id_sk = SK::latest('id_sk')->select('id_sk')->value('id_sk');
             $no_sk = ($request->kode_sk)." /"."  ".($id_sk+1)."  "."/ ".$returnValue." / ".$yearNow;
+            $id_kodesk = Kodesk::where('kode_sk', $request->kode_sk)->select('id_kodesk')->value('id_kodesk');
+            $pengajuan = Pengajuan::where('no_pengajuan', $request->no_pengajuan)->first();
 
         $form_data = array(
         'no_sk'  => $no_sk,
+        'id_kodesk' => $id_kodesk,
         'kode_sk' => $request->kode_sk,
         'jenis_sk' => $request->jenis_pengajuan,
         'id_warga'  => $request->id_warga,
-        'keterangan_1'  => $request->keterangan_1,
-        'keterangan_2'  => $request->keterangan_2,
-        'keterangan_3'  => $request->keterangan_3,
-        'keterangan_4'  => $request->keterangan_4,
+        'detail_sk' => $pengajuan->detail_pengajuan,
+        'keterangan_sk' => $pengajuan->keterangan_pengajuan,
+        'jenis_sk' => $pengajuan->jenis_pengajuan
         
         );
 

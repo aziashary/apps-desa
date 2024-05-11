@@ -20,10 +20,11 @@ class CreatePengajuanTable extends Migration
             $table->string('no_pengajuan')->unique();
             $table->string('id_warga');
             $table->string('status_pengajuan');
-            $table->string('keterangan_1');
-            $table->string('keterangan_2')->nullable();
-            $table->string('keterangan_3')->nullable();
-            $table->string('keterangan_4')->nullable();
+            $table->json('detail_pengajuan')->nullable();
+            $table->json('keterangan_pengajuan');
+            $table->string('berkas_1')->nullable();
+            $table->string('berkas_2')->nullable();
+            $table->string('berkas_3')->nullable();
             $table->timestamps();
         });
     }
