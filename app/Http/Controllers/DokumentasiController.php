@@ -64,7 +64,7 @@ class DokumentasiController extends Controller
         Detaildokumentasi::create($form_data);
 
      if($form_data){
-        return redirect('admindesaadmindesa/dokumentasi/detail/'.$id_dokumentasi)->with('success','Berhasil Update Data');
+        return redirect('admindesa/dokumentasi/detail/'.$id_dokumentasi)->with('success','Berhasil Update Data');
     }else{
         return back()->with('error','Gagal Update Data');
     }
@@ -94,7 +94,7 @@ class DokumentasiController extends Controller
      Dokumentasi::create($form_data);
 
      if($form_data){
-        return redirect('admindesaadmindesa/dokumentasi')->with('success','Berhasil Tambah Data');
+        return redirect('admindesa/dokumentasi')->with('success','Berhasil Tambah Data');
     }else{
         return back()->with('error','Gagal Tambah Data');
     }

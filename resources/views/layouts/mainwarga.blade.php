@@ -7,7 +7,7 @@
     @yield('judul')
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset ('plugin/img/favicon/favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset ('template/foto/logo.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -46,15 +46,16 @@
 
 <body>
  <!-- Layout wrapper -->
- <div class="layout-wrapper layout-content-navbar">
+  <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
       <!-- Menu -->
 
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <div class="app-brand demo">
-          <a href="index.html" class="app-brand-link">
+          <a href="#" class="app-brand-link">
             <span class="app-brand-logo demo">
-              <svg
+              <img src="{{ asset ('template/foto/logo.png') }}" width="35" height="40">
+              {{-- <svg
                 width="25"
                 viewBox="0 0 25 42"
                 version="1.1"
@@ -106,9 +107,9 @@
                     </g>
                   </g>
                 </g>
-              </svg>
+              </svg> --}}
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+            <span class="demo menu-text fw-bolder ms-2">Ciaruteun Ilir</span>
           </a>
 
           <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -158,11 +159,7 @@
               </li>
             </ul>
         </li>
-              
-            
-          
-          
-        </ul>
+        
       </aside>
       <!-- / Menu -->
 
@@ -170,8 +167,8 @@
       <div class="layout-page">
         <!-- Navbar -->
 
-        {{-- <nav
-          class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center"
+        <nav
+          class="layout-navbar container-fluid navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
           id="layout-navbar"
         >
           <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
@@ -181,6 +178,7 @@
           </div>
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            <span class="fw-bolder" style="width: 100%;">Admin Pelayanan Desa Ciaruteun Ilir</span>
             <!-- Search -->
             {{-- <div class="navbar-nav align-items-center">
               <div class="nav-item d-flex align-items-center">
@@ -195,7 +193,8 @@
             </div> --}}
             <!-- /Search -->
 
-            {{-- <ul class="navbar-nav flex-row align-items-center ms-auto"> --}}
+            <ul class="navbar-nav d-flex align-items-center ms-auto">
+              <span class="fw-bolder" style="width: 100%;">{{ Auth::user()->name }}</span>
               <!-- Place this tag where you want the button to render. -->
               {{-- <li class="nav-item lh-1 me-3">
                 <a
@@ -210,19 +209,19 @@
               </li> --}}
 
               <!-- User -->
-              {{-- <li class="nav-item navbar-dropdown dropdown-user dropdown">
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                  <div class="avatar avatar-online">
-                    <img src="{{ asset ('plugin/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
-                  </div>
+                  {{-- <div class="avatar avatar-online"> --}}
+                    <i class="bx bx-user"></i>
+                  {{-- </div> --}}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                  <li>
+                  {{-- <li>
                     <a class="dropdown-item" href="#">
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
-                            <img src="{{ asset ('plugin/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                            <i class="menu-icon tf-icons bx bx-user"></i>
                           </div>
                         </div>
                         <div class="flex-grow-1">
@@ -234,35 +233,10 @@
                   </li>
                   <li>
                     <div class="dropdown-divider"></div>
-                  </li>
+                  </li> --}}
                   <li>
-                    <a class="dropdown-item" href="#">
-                      <i class="bx bx-user me-2"></i>
-                      <span class="align-middle">My Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <i class="bx bx-cog me-2"></i>
-                      <span class="align-middle">Settings</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">
-                      <span class="d-flex align-items-center align-middle">
-                        <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                        <span class="flex-grow-1 align-middle">Billing</span>
-                        <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <div class="dropdown-divider"></div>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="auth-login-basic.html">
-                      <i class="bx bx-power-off me-2"></i>
-                      <span class="align-middle">Log Out</span>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                      <i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
                     </a>
                   </li>
                 </ul>
@@ -270,7 +244,7 @@
               <!--/ User -->
             </ul>
           </div>
-        </nav> --}} 
+        </nav>
 
         <!-- / Navbar -->
 
@@ -321,7 +295,7 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="{{ asset ('plugin/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <!-- Main JS -->
     <script src="{{ asset ('plugin/js/main.js') }}"></script>
@@ -331,6 +305,17 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js') }}"></script>
+
+    {{-- Notification --}}
+    <script>
+      document.getElementById("myAlert").style.display = "block";
+  
+      setTimeout(function() {
+        $("#myAlert").fadeOut();
+      }, 5000);
+    </script>
+
+    
 @stack('js')
 </body>
 

@@ -40,7 +40,7 @@ class VisimisiController extends Controller
      Visimisi::create($form_data);
 
     if($form_data){
-        return redirect('/visimisi')->with('success','Berhasil Tambah Data');
+        return redirect('admindesa/visimisi')->with('success','Berhasil Tambah Data');
     }else{
         return back()->with('error','Gagal Tambah Data');
     }
@@ -59,7 +59,7 @@ class VisimisiController extends Controller
      Visimisi::where('id_visimisi', $request->id_visimisi)->update($form_data);
 
      if($form_data){
-        return redirect('/visimisi')->with('success','Berhasil Update Data');
+        return redirect('admindesa/visimisi')->with('success','Berhasil Update Data');
     }else{
         return back()->with('error','Gagal Update Data');
     }

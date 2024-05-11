@@ -79,7 +79,7 @@ class SejarahController extends Controller
      Sejarah::where('id_sejarah', $request->id_sejarah)->update($form_data);
 
      if($form_data){
-        return redirect('/sejarah')->with('success','Berhasil Update Data');
+        return redirect('admindesa/sejarah')->with('success','Berhasil Update Data');
     }else{
         return back()->with('error','Gagal Update Data');
     }
