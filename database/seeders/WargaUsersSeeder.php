@@ -12,13 +12,13 @@ class WargaUsersSeeder extends Seeder
 {
     public function run()
     {
-        // User::create([
-        //     'name'=>'Admin',
-        //     'username'=>'admindesa',
-        //     'email'=>'admin.net@gmail.com',
-        //     'password'=>Hash::make('12345678'),
-        //     'level'=>1,
-        // ]);
+        User::create([
+            'name'=>'Admin',
+            'username'=>'admindesa',
+            'email'=>'admin.net@gmail.com',
+            'password'=>Hash::make('12345678'),
+            'level'=>1,
+        ]);
         // Mengambil data dari tabel warga
         $wargaData = Warga::get();
 

@@ -50,11 +50,7 @@ class DashboardwargaController extends Controller
         $username = auth()->user()->username;
         $no_kk= Warga::where('nik', $username)->pluck('no_kk')->first();
 
-        $data = Pengajuan::join('warga', 'pengajuan.id_warga', '=', 'warga.id_warga')
-                ->where('warga.no_kk', '=', $no_kk)
-                ->orderBy('no_pengajuan', 'ASC')
-                ->with('wargas')
-                ->get();
+        $data = Pengajuan::get();
 
         return view('lamanwarga.index', compact('data'));
     }
@@ -267,7 +263,7 @@ class DashboardwargaController extends Controller
      Pengajuan::where('id_pengajuan', $id_pengajuan)->update($form_data);
 
         if($form_data){
-            return redirect('/lamanwarga/edit')->with('success','Berhasil Update Data');
+            return redirect('dashboardwarga/edit')->with('success','Berhasil Update Data');
         }else{
             return back()->with('error','Gagal Update Data');
         }
@@ -278,7 +274,7 @@ class DashboardwargaController extends Controller
      $destroy = Pengajuan::where('id_pengajuan', $id_pengajuan)->delete();
 
         if($destroy){
-        return redirect('/lamanwarga/pengajuan')->with('success','Berhasil menghapus data');
+        return redirect('dashboardwarga/pengajuan')->with('success','Berhasil menghapus data');
         }else{
             return back()->with('error','Gagal Hapus Data');
         }

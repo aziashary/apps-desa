@@ -14,7 +14,7 @@
 
     <div class="container-xxl flex-grow-1 container-p-y">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('admindesa/dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('dashboardwarga/dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Data Pengajuan Surat Keterangan</li>
             </ol>
       
@@ -32,7 +32,6 @@
                     <tr>
                         <th>No</th>
                         <th>No Pengajuan</th>
-                        <th>Nama</th>
                         <th>Tanggal Dibuat</th>
                         <th>Jenis Pengajuan</th>
                         <th>Status</th>
@@ -48,7 +47,6 @@
                     <tr>
                         <td>{{ $no++ }}</td>
                         <td>{{ $pengajuan->no_pengajuan}}</td>
-                        <td>{{ $pengajuan->wargas->nama_warga }}</td>
                         <td>{{ date('d-m-Y', strtotime($pengajuan->created_at)) }}</td>
                         <td>{{ $pengajuan->jenis_pengajuan}}</td>
                         <td align="center" >
@@ -61,7 +59,8 @@
                             @endif                            
                         </td>
                         <td align="center" >
-                            <a href="{{ URL('dashboardwarga/pengajuan/edit/'. $pengajuan->id_pengajuan) }}" class="btn btn-primary">Edit</a>
+                            {{-- <a href="{{ URL('dashboardwarga/pengajuan/edit/'. $pengajuan->id_pengajuan) }}" class="btn btn-primary">Edit</a> --}}
+                            {{-- <a href="#" class="btn btn-primary" title="Maaf, fitur ini masih dalam pengembangan">Edit</a> --}}
                             <a href="{{ URL('dashboardwarga/pengajuan/delete/'. $pengajuan->id_pengajuan) }}" class="btn btn-danger">Hapus</a>
                         </td>
                     </tr>

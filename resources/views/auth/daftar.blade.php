@@ -82,20 +82,44 @@
                 </div>
                 <!-- /Logo -->
                 <h4 class="mb-2">Pelayanan Umum Cimanggu I</h4>
-                <p class="mb-4">Silahkan login dengan username dan password yang tepat</p>
+                <p class="mb-4">Silahkan daftar dan isi data diri dengan lengkap dan benar</p>
   
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                   <div class="mb-3">
-                    <label for="email" class="form-label">Username/NIK</label>
+                    <label for="username" class="form-label">NIK</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="username"
+                      name="username" :value="old('username')"
+                      placeholder="Enter your NIK"
+                      autofocus
+                    required/>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Nama</label>
                     <input
                       type="text"
                       class="form-control"
                       id="username"
-                      name="username" :value="old('username')"
+                      name="nama_warga"
                       placeholder="Enter your username"
                       autofocus
-                    />
+                    required/>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label">No KK</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      name="no_kk"
+                      placeholder="Enter your No KK"
+                      autofocus
+                    required/>
                   </div>
                   <div class="mb-3 form-password-toggle">
                     <div class="d-flex justify-content-between">
@@ -110,18 +134,39 @@
                         required autocomplete="current-password" 
                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                         aria-describedby="password"
-                      />
+                        required autocomplete="new-password"/>
                       <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                     </div>
                   </div>
+
+                  <div class="mb-3 form-password-toggle">
+                    <div class="d-flex justify-content-between">
+                      <label class="form-label" for="password">Konfirmasi Password</label>
+                    </div>
+                    <div class="input-group input-group-merge">
+                      <input
+                        type="password"
+                        id="password"
+                        required autocomplete="new-password"
+                        class="form-control"
+                        name="password_confirmation"
+                        required autocomplete="current-password" 
+                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                        aria-describedby="password"
+                      required/>
+                      <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    </div>
+                  </div>
+
+                 
                   <div class="mb-3">
-                    <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                    <button class="btn btn-primary d-grid w-100" type="submit" Disabled>Sign in</button>
                   </div>
                 </form>
                 <p class="text-center">
-                    <span>Belum Punya Akun?</span>
-                    <a href="{{ url('register') }}">
-                      <span>Daftar Disini</span>
+                    <span>Sudah Punya Akun?</span>
+                    <a href="{{ url('login') }}">
+                      <span>Login Disini</span>
                     </a>
                 </p>
               </div>

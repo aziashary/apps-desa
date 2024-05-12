@@ -81,8 +81,8 @@ class SKController extends Controller
             
 
             $yearNow = date('Y');
-            $id_sk = SK::latest('id_sk')->select('id_sk')->value('id_sk');
-            $no_sk = ($request->kode_sk)." /"."  ".($id_sk+1)."  "."/ ".$returnValue." / ".$yearNow;
+            $regis_sk = SK::where('kode_sk', $request->kode_sk)->count();
+            $no_sk = ($request->kode_sk)." /"."  ".($regis_sk+1)."  "."/ ".$returnValue." / ".$yearNow;
             $id_kodesk = Kodesk::where('kode_sk', $request->kode_sk)->select('id_kodesk')->value('id_kodesk');
             $pengajuan = Pengajuan::where('no_pengajuan', $request->no_pengajuan)->first();
 
@@ -130,7 +130,8 @@ class SKController extends Controller
 
     $keterangankodesk = json_decode($kets->keterangan, true);
     $detailkodesk = json_decode($kets->detail_keterangansk, true);
-    $detailsk = json_decode($item->keterangan_sk, true);
+    $detailsk = json_decode($item->detail_sk, true);
+    $keterangansk = json_decode($item->keterangan_sk, true);
     
     // Keterangan SK
     
@@ -141,38 +142,73 @@ class SKController extends Controller
     }
     
     if (!empty($detailkodesk['warga'][0]['nama_warga'])) {
-        $worksheet->setCellValue($detailkodesk['warga'][0]['nama_warga'], $item->wargas->nama_warga);
+        $worksheet->setCellValue($detailkodesk['warga'][0]['nama_warga'], $detailsk['warga'][0]['nama_warga']);
     }
 
     if (!empty($detailkodesk['warga'][0]['tanggal_lahir'])) {
-        $worksheet->setCellValue($detailkodesk['warga'][0]['tanggal_lahir'], date('d-m-Y', strtotime($item->wargas->tanggal_lahir)));
+        $worksheet->setCellValue($detailkodesk['warga'][0]['tanggal_lahir'], date('d-m-Y', strtotime($detailsk['warga'][0]['tanggal_lahir'])));
     }
 
     if (!empty($detailkodesk['warga'][0]['tempat_lahir'])) {
-        $worksheet->setCellValue($detailkodesk['warga'][0]['tempat_lahir'], $item->wargas->tempat_lahir);
+        $worksheet->setCellValue($detailkodesk['warga'][0]['tempat_lahir'], $detailsk['warga'][0]['tempat_lahir']);
+    }
+
+    if (!empty($detailkodesk['warga'][0]['jenis_kelamin'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][0]['jenis_kelamin'], $detailsk['warga'][0]['jenis_kelamin']);
     }
     
     if (!empty($detailkodesk['warga'][0]['nik'])) {
-        $worksheet->setCellValue($detailkodesk['warga'][0]['nik'], $item->wargas->nik);
+        $worksheet->setCellValue($detailkodesk['warga'][0]['nik'], $detailsk['warga'][0]['nik']);
     }
     
     if (!empty($detailkodesk['warga'][0]['jenis_pekerjaan'])) {
-        $worksheet->setCellValue($detailkodesk['warga'][0]['jenis_pekerjaan'], $item->wargas->jenis_pekerjaan);
+        $worksheet->setCellValue($detailkodesk['warga'][0]['jenis_pekerjaan'], $detailsk['warga'][0]['jenis_pekerjaan']);
     }
     
     if (!empty($detailkodesk['warga'][0]['agama'])) {
-        $worksheet->setCellValue($detailkodesk['warga'][0]['agama'], $item->wargas->agama);
-    }
+        $worksheet->setCellValue($detailkodesk['warga'][0]['agama'], $detailsk['warga'][0]['agama']);
     
     if (!empty($detailkodesk['warga'][0]['alamat'])) {
-        $worksheet->setCellValue($detailkodesk['warga'][0]['alamat'], $item->wargas->alamat);
+        $worksheet->setCellValue($detailkodesk['warga'][0]['alamat'], $detailsk['warga'][0]['alamat']);
+    }
+
+    if (!empty($detailkodesk['warga'][1]['nama_warga'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][1]['nama_warga'], $detailsk['warga'][1]['nama_warga']);
+    }
+
+    if (!empty($detailkodesk['warga'][1]['tanggal_lahir'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][1]['tanggal_lahir'], date('d-m-Y', strtotime($detailsk['warga'][1]['tanggal_lahir'])));
+    }
+
+    if (!empty($detailkodesk['warga'][1]['tempat_lahir'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][1]['tempat_lahir'], $detailsk['warga'][1]['tempat_lahir']);
+    }
+
+    if (!empty($detailkodesk['warga'][1]['jenis_kelamin'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][1]['jenis_kelamin'], $detailsk['warga'][1]['jenis_kelamin']);
+    }
+    
+    if (!empty($detailkodesk['warga'][1]['nik'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][1]['nik'], $detailsk['warga'][1]['nik']);
+    }
+    
+    if (!empty($detailkodesk['warga'][1]['jenis_pekerjaan'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][1]['jenis_pekerjaan'], $detailsk['warga'][1]['jenis_pekerjaan']);
+    }
+    
+    if (!empty($detailkodesk['warga'][1]['agama'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][1]['agama'], $detailsk['warga'][1]['agama']);
+    }
+    
+    if (!empty($detailkodesk['warga'][1]['alamat'])) {
+        $worksheet->setCellValue($detailkodesk['warga'][1]['alamat'], $detailsk['warga'][1]['alamat']);
     }
     
     for ($i = 1; $i <= 20; $i++) {
         $kunci = "keterangan_$i";
     
-        if (!empty($keterangankodesk[$kunci]) && !empty($detailsk[$kunci])) {
-            $worksheet->setCellValue($keterangankodesk[$kunci], $detailsk[$kunci]);
+        if (!empty($keterangankodesk[$kunci]) && !empty($keterangansk[$kunci])) {
+            $worksheet->setCellValue($keterangankodesk[$kunci], $keterangansk[$kunci]);
         }
     }
     
@@ -192,6 +228,8 @@ class SKController extends Controller
     if (!empty($detailkodesk['ttd_pengaju'])) {
         $worksheet->setCellValue($detailkodesk['ttd_pengaju'], $item->wargas->nama_warga);
     }
+    
+}   
     
     
 
@@ -356,8 +394,8 @@ class SKController extends Controller
         }
 
         $yearNow = date('Y');
-        $id_sk = SK::latest('id_sk')->select('id_sk')->value('id_sk');
-        $no_sk = ($request->kode_sk)." /"."  ".($id_sk+1)."  "."/ ".$returnValue." / ".$yearNow;
+        $regis_sk = SK::where('kode_sk', $request->kode_sk)->count();
+        $no_sk = ($request->kode_sk)." /"."  ".($regis_sk+1)."  "."/ ".$returnValue." / ".$yearNow;
         
         // Array Keterangan
         $keterangansk = [];

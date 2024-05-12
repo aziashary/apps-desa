@@ -57,7 +57,7 @@ Route::get('/', [HomeController::class, 'index']);
 
 // Dashboard Warga
 Route::group(['prefix' => 'dashboardwarga', 'middleware' => 'isWarga'], function () {
-    Route::get('/', [DashboardwargaController::class, 'index']);
+    Route::get('/', [DashboardwargaController::class, 'index'])->name('dashboardwarga');;
     Route::get('/profile', [DashboardwargaController::class, 'profile']);
     Route::get('/pengajuan', [DashboardwargaController::class, 'pengajuan']);
 

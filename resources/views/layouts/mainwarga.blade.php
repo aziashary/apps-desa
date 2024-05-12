@@ -46,7 +46,7 @@
 
 <body>
  <!-- Layout wrapper -->
- <div class="layout-wrapper layout-content-navbar">
+  <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
       <!-- Menu -->
 
@@ -159,11 +159,7 @@
               </li>
             </ul>
         </li>
-              
-            
-          
-          
-        </ul>
+        
       </aside>
       <!-- / Menu -->
 
@@ -182,7 +178,6 @@
           </div>
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-            <span class="fw-bolder" style="width: 100%;">Dashboard Warga Pelayanan Desa Cimanggu I</span>
             <!-- Search -->
             {{-- <div class="navbar-nav align-items-center">
               <div class="nav-item d-flex align-items-center">
@@ -299,7 +294,7 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="{{ asset ('plugin/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <!-- Main JS -->
     <script src="{{ asset ('plugin/js/main.js') }}"></script>
@@ -309,6 +304,17 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js') }}"></script>
+
+    {{-- Notification --}}
+    <script>
+      document.getElementById("myAlert").style.display = "block";
+  
+      setTimeout(function() {
+        $("#myAlert").fadeOut();
+      }, 5000);
+    </script>
+
+    
 @stack('js')
 </body>
 

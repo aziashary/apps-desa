@@ -5,34 +5,34 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pelayanan Umum Desa Cimanggu 1</title>
+  <title>Desa Cimanggu I</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="{{ asset ('template/foto/logo.png') }}">
-  <link href="{{ asset ('template/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+  <link href="{{ asset ('template/foto/logo.png') }}" rel="icon">
+  <link href="{{ asset ('template/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="{{ asset ('template/vendor/aos/aos.css')}}" rel="stylesheet">
-  <link href="{{ asset ('template/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{ asset ('template/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-  <link href="{{ asset ('template/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
-  <link href="{{ asset ('template/vendor/glightbox/css/glightbox.min.css')}}" rel="stylesheet">
-  <link href="{{ asset ('template/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+  <link href="{{ asset ('template/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ asset ('template/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset ('template/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset ('template/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
+  <link href="{{ asset ('template/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ asset ('template/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ asset ('template/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset ('assets/extensions/simple-datatables/style.css') }}">
+  <link rel="stylesheet" href="{{ asset ('assets/css/pages/simple-datatables.css') }}">
 
   <!-- Template Main CSS File -->
-  <link href="{{ asset ('template/css/style.css')}}" rel="stylesheet">
+  <link href="{{ asset ('template/css/style.css') }}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: BizLand - v3.8.1
-  * Template URL: https://bootstrapmade.com/bizland-bootstrap-business-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -56,7 +56,7 @@
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
-      <a href="#hero" class="logo"><img src="{{ asset ('template/foto/logo.png') }}" alt=""></a>
+      <a href="#hero" class="logo"><img src="{{ asset ('assets/foto/logo.png') }}" alt=""></a>
       <h5 class="logo">Desa Cimanggu I</h5>
       <!-- Uncomment below if you prefer to use an image logo -->
       
@@ -67,9 +67,9 @@
           <li><a class="nav-link scrollto" href="#about">Tentang</a></li>
           <!-- <li><a class="nav-link scrollto" href="#services">Pelayanan</a></li> -->
           <li><a class="nav-link scrollto " href="#portfolio">Dokumentasi</a></li>
-          {{-- <li><a class="nav-link scrollto " href="#Aparaturdesa">Aparatur Desa</a></li> --}}
-          <li><a class="nav-link scrollto" href="#struktur">Struktur Organisasi</a></li>
-          {{-- <li><a class="nav-link scrollto" href="#contact">Kontak</a></li> --}}
+          {{-- <li><a class="nav-link scrollto " href="#Aparaturdesa">Aparatur Desa</a></li>
+          <li><a class="nav-link scrollto" href="#struktur">Struktur Organisasi</a></li> --}}
+          <li><a class="nav-link scrollto" href="#contact">Kontak</a></li>
           <li><a class="nav-link scrollto" href="{{ url('login') }}">Pelayanan Desa</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -178,10 +178,11 @@
       <div class="container" data-aos="fade-up">
        <br>
         <div class="row">
+        {{-- @foreach($penduduk as $key) --}}
           <div class="col-lg-4 col-md-8">
             <div class="count-box">
               <i class="fas fa-person"></i>
-              <span data-purecounter-start="0" data-purecounter-end="{{ $laki }}" data-purecounter-duration="1" class="purecounter"></span>
+              {{-- <span data-purecounter-start="0" data-purecounter-end="{{ $key->jumlah_pria }}" data-purecounter-duration="1" class="purecounter"></span> --}}
               <p>Pria</p>
             </div>
           </div>
@@ -189,7 +190,7 @@
           <div class="col-lg-4 col-md-8 mt-5 mt-md-0">
             <div class="count-box">
             <i class="fas fa-person-dress"></i>
-              <span data-purecounter-start="0" data-purecounter-end="{{ $perempuan }}" data-purecounter-duration="1" class="purecounter"></span>
+              {{-- <span data-purecounter-start="0" data-purecounter-end="{{ $key->jumlah_wanita }}" data-purecounter-duration="1" class="purecounter"></span> --}}
               <p>Wanita</p>
             </div>
           </div>
@@ -197,7 +198,7 @@
           <div class="col-lg-4 col-md-8 mt-5 mt-lg-0">
             <div class="count-box">
             <i class="fas fa-child"></i>
-              <span data-purecounter-start="0" data-purecounter-end="{{ $anak }}" data-purecounter-duration="1" class="purecounter"></span>
+              {{-- <span data-purecounter-start="0" data-purecounter-end="{{ $key->jumlah_anak }}" data-purecounter-duration="1" class="purecounter"></span> --}}
               <p>Anak - anak</p>
             </div>
           </div>
@@ -206,7 +207,7 @@
       </div>
     </div>
 
-    {{-- <div class="section-title">
+    <div class="section-title">
           <h3>Data <span>Penduduk</span></h3>
         </div>
       <div class="container" data-aos="fade-up">
@@ -251,7 +252,7 @@
           </div> 
         </div> 
       </div>
-    </div> --}}
+    </div>
     
     
     </section><!-- End Counts Section -->
@@ -477,7 +478,7 @@
 
         <div class="row">
           <div class="col-lg-12" data-aos="fade-right" data-aos-delay="100">
-            <img src="{{ asset ('template/foto/cimanggu.jpg') }}" class="img-fluid" alt="">
+            <img src="{{ asset ('assets/foto/Kepala_Desa.png') }}" class="img-fluid" alt="">
           </div>
         </div>
 
@@ -786,18 +787,48 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="{{ asset ('template/vendor/purecounter/purecounter_vanilla.js')}}"></script>
-  <script src="{{ asset ('template/vendor/aos/aos.js')}}"></script>
-  <script src="{{ asset ('template/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{ asset ('template/vendor/glightbox/js/glightbox.min.js')}}"></script>
-  <script src="{{ asset ('template/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
-  <script src="{{ asset ('template/vendor/swiper/swiper-bundle.min.js')}}"></script>
-  <script src="{{ asset ('template/vendor/waypoints/noframework.waypoints.js')}}"></script>
-  <script src="{{ asset ('template/vendor/php-email-form/validate.js')}}"></script>
+  <script src="{{ asset ('template/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ asset ('template/vendor/aos/aos.js') }}"></script>
+  <script src="{{ asset ('template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset ('template/vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ asset ('template/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ asset ('template/vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ asset ('template/vendor/waypoints/noframework.waypoints.js') }}"></script>
+  <script src="{{ asset ('template/vendor/php-email-form/validate.js') }}"></script>
 
   <!-- Template Main JS File -->
-  <script src="{{ asset ('template/js/main.js')}}"></script>
+  <script src="{{ asset ('template/js/main.js') }}"></script>
 
+  <!-- datatable -->
+  {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script> --}}
+
+  <script src="{{ asset ('assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
+  <script src="{{ asset ('assets/js/pages/simple-datatables.js') }}"></script>
+  
+  <script>
+  $(document).ready(function () {
+    $('#example').DataTable();
+  });
+  </script>
+  <script>
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": false,
+      "info": false,
+      "autoWidth": false,
+      "responsive": false,
+      columnDefs: [
+    {
+        targets: [ 0,1,2,3 4 ],
+        className: 'dt-head-center'
+    }
+  ]
+    });
+    </script>
 </body>
 
 </html>

@@ -20,7 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        return view('auth.daftar');
     }
 
     /**
@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'username'=>'required|max:30|unique:users,username',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
