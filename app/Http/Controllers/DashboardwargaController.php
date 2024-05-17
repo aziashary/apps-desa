@@ -48,9 +48,9 @@ class DashboardwargaController extends Controller
     public function pengajuan()
     {
         $username = auth()->user()->username;
-        $no_kk= Warga::where('nik', $username)->pluck('no_kk')->first();
-
-        $data = Pengajuan::get();
+        $id_warga= Warga::where('nik', $username)->pluck('id_warga')->first();
+        $pengajuan = Pengajuan::where('id_warga',$id_warga)->wargas()->get();
+        $data = Pengajuan::where('id_pengajuan', $pengajuan)->get();
 
         return view('lamanwarga.index', compact('data'));
     }
@@ -162,7 +162,7 @@ class DashboardwargaController extends Controller
             $berkas1 = $request->file('berkas_1');
             $namaBerkas1 = $berkas1->getClientOriginalName(); // Menambahkan ID warga ke dalam nama file
             $berkas1->move(public_path('plugin\berkas'), $namaBerkas1);
-            $url_berkas_1 = "plugin\\berkas\\". $namaBerkas1 ;
+            $url_berkas_1 = "plugin/berkas/". $namaBerkas1 ;
         }
 
         // Meng-handle upload berkas 2 (opsional)
@@ -170,7 +170,7 @@ class DashboardwargaController extends Controller
             $berkas2 = $request->file('berkas_2');
             $namaBerkas2 = $berkas2->getClientOriginalName(); // Menambahkan ID warga ke dalam nama file
             $berkas2->move(public_path('plugin\berkas'), $namaBerkas2);
-            $url_berkas_2 = "plugin\\berkas\\". $namaBerkas2 ;
+            $url_berkas_2 = "plugin/berkas/". $namaBerkas2 ;
         }
 
         // Meng-handle upload berkas 3 (opsional)
@@ -178,7 +178,7 @@ class DashboardwargaController extends Controller
             $berkas3 = $request->file('berkas_3');
             $namaBerkas3 = $berkas3->getClientOriginalName(); // Menambahkan ID warga ke dalam nama file
             $berkas3->move(public_path('plugin\berkas'), $namaBerkas3);
-            $url_berkas_3 = "plugin\\berkas\\". $namaBerkas3 ;
+            $url_berkas_3 = "plugin/berkas/". $namaBerkas3 ;
         }
 
      $form_data = array(
