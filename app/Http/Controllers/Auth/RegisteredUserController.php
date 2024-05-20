@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use App\Models\Kartukeluarga;
+use App\Models\Warga;
 
 class RegisteredUserController extends Controller
 {
@@ -39,10 +41,45 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $form_data = array(
+            'nik'  => $request->username,
+            'no_kk' => $request->no_kk,
+            'nama_warga'  => $request->nama_warga,
+            'tempat_lahir'  => $request->tempat_lahir,
+            'tanggal_lahir'  => $request->tanggal_lahir,
+            'alamat'  => $request->alamat,
+            'jenis_pekerjaan'  => $request->jenis_pekerjaan,
+            'jenis_kelamin'  => $request->jenis_kelamin,
+            'agama'  => $request->agama,
+            'desa' => "CIMANGGU I"
+            
+           );
+           if (!is_null($request->no_kk)) {
+
+           $kk = Kartukeluarga::where('no_kk', $request->no_kk)->first();
+
+           if (empty($kk)) {
+            $form_kk = array(
+               'no_kk' => $request->no_kk,
+               'kepala_keluarga'  => $request->nama_warga,
+              );
+           Kartukeluarga::create($form_kk);
+           }
+             
+            $tambah_warga = Warga::create($form_data);
+
+           }else{
+
+             $tambah_warga = Warga::create($form_data);
+
+           }
+
+        $id_warga = Warga::latest()->value('id_warga');
         $user = User::create([
-            'name' => 'Warga',
+            'name' => $request->nama_warga,
+            'id_warga' => $id_warga,
             'username' => $request->username,
-            'email' => $request->email,
+            // 'email' => $request->email,
             'password' => Hash::make($request->password),
             'level'=>2,
         ]);

@@ -34,7 +34,58 @@
           </div>
         </div>
       </div>
-      
+      <div class="row">
+        <div class="col-lg-4 mb-4 order-0">
+          <div class="card">
+              <div class="card-body">
+                  <li class="d-flex mb-0 pb-1">
+                      <div class="avatar flex-shrink-0 me-3">
+                      <img src="{{ asset ('plugin/img/icons/email.png') }}" alt="User" class="rounded" />
+                      </div>
+                      <div class="me-10">
+                          <span>Total Pengajuan </span>
+                          <h3 class="text-nowrap mb-1 text-primary">{{ $pengajuan }}</h3>
+                          <h5 class="text-nowrap mb-1">Surat</h5> 
+                      </div>
+                  </li>
+              </div>
+          </div>
+       </div>
+
+       <div class="col-lg-4 mb-4 order-0">
+          <div class="card">
+              <div class="card-body">
+                  <li class="d-flex mb-0 pb-1">
+                      <div class="avatar flex-shrink-0 me-3">
+                      <img src="{{ asset ('plugin/img/icons/new-email.png') }}" alt="User" class="rounded" />
+                      </div>
+                      <div class="me-10">
+                          <span>Total Surat di Approve </span>
+                          <h3 class="text-nowrap mb-1 text-primary">{{ $approve }}</h3>
+                          <h5 class="text-nowrap mb-1">Surat</h5> 
+                      </div>
+                  </li>
+              </div>
+          </div>
+       </div>
+
+       <div class="col-lg-4 mb-4 order-0">
+        <div class="card">
+            <div class="card-body">
+                <li class="d-flex mb-0 pb-1">
+                    <div class="avatar flex-shrink-0 me-3">
+                    <img src="{{ asset ('plugin/img/icons/business.png') }}" alt="User" class="rounded" />
+                    </div>
+                    <div class="me-10">
+                        <span>Total Surat Selesai </span>
+                        <h3 class="text-nowrap mb-1 text-primary">{{ $selesai }}</h3>
+                        <h5 class="text-nowrap mb-1">Surat</h5> 
+                    </div>
+                </li>
+            </div>
+        </div>
+     </div>
+  </div>
 
     {{-- <!-- Footer -->
     <footer class="content-footer footer bg-footer-theme">

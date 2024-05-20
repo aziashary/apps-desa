@@ -32,6 +32,7 @@
                     <tr>
                         <th>No</th>
                         <th>No Pengajuan</th>
+                        <th>Nama</th>
                         <th>Tanggal Dibuat</th>
                         <th>Jenis Pengajuan</th>
                         <th>Status</th>
@@ -47,6 +48,7 @@
                     <tr>
                         <td>{{ $no++ }}</td>
                         <td>{{ $pengajuan->no_pengajuan}}</td>
+                        <td>{{ $pengajuan->wargas->nama_warga}}</td>
                         <td>{{ date('d-m-Y', strtotime($pengajuan->created_at)) }}</td>
                         <td>{{ $pengajuan->jenis_pengajuan}}</td>
                         <td align="center" >

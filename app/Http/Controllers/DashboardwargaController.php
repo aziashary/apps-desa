@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\SKKM;
 use App\Models\Warga;
 use App\Models\Pengajuan;
+use App\Models\Notification;
+use Illuminate\Support\Facades\Auth;
 use ArielMejiaDev\LarapexCharts\Facades\LarapexChart;
 
 class DashboardwargaController extends Controller
@@ -30,9 +32,19 @@ class DashboardwargaController extends Controller
                 ->setColors(['#435ebe','#55c6e8'])
                 ->setLabels(['Jan', 'Feb']);
 
+    $pengajuanproses = Pengajuan::where('id_warga', auth()->user()->id_warga)->count();
+    $approve =  Pengajuan::where('status_pengajuan','Approved')->where('id_warga', auth()->user()->id_warga)->count();
+    $selesai = Notification::where('id_warga', auth()->user()->id_warga)
+                       ->whereNotNull('id_sk')
+                       ->count();
+
+
      return view('dashboardwarga', [
         'warga' => $warga, 
         'skkm' => $skkm,
+        'pengajuan' => $pengajuanproses,
+        'approve' =>$approve,
+        'selesai' =>$selesai,
         'chart' => $chart,
         'char' => $char
      ]);
@@ -48,11 +60,29 @@ class DashboardwargaController extends Controller
     public function pengajuan()
     {
         $username = auth()->user()->username;
-        $id_warga= Warga::where('nik', $username)->pluck('id_warga')->first();
-        $pengajuan = Pengajuan::where('id_warga',$id_warga)->wargas()->get();
-        $data = Pengajuan::where('id_pengajuan', $pengajuan)->get();
+        $warga = Warga::where('nik', $username)->first();
+        $no_kk = $warga->no_kk;
+
+        // Ambil semua warga yang memiliki no_kk tersebut
+        $wargasDenganNoKK = Warga::where('no_kk', $no_kk)->pluck('id_warga');
+
+        // Ambil data pengajuan untuk semua id_warga yang memiliki no_kk tersebut
+        $data = Pengajuan::whereIn('id_warga', $wargasDenganNoKK)->get();
 
         return view('lamanwarga.index', compact('data'));
+    }
+
+    public function getUnreadNotifications()
+    {
+        // Pastikan Auth::user() mengembalikan pengguna yang sedang login
+        $id_warga = Auth::user()->id_warga;
+
+        $notifications = Notification::where('id_warga', $id_warga)
+                                     ->where('is_read', false)
+                                     ->orderBy('created_at', 'desc')
+                                     ->get(['message', 'created_at']);
+
+        return response()->json($notifications);
     }
 
     function create()
@@ -160,26 +190,76 @@ class DashboardwargaController extends Controller
         
         if ($request->hasFile('berkas_1')) {
             $berkas1 = $request->file('berkas_1');
-            $namaBerkas1 = $berkas1->getClientOriginalName(); // Menambahkan ID warga ke dalam nama file
-            $berkas1->move(public_path('plugin\berkas'), $namaBerkas1);
-            $url_berkas_1 = "plugin/berkas/". $namaBerkas1 ;
+            
+            // Membuat nama file yang unik dengan menambahkan timestamp atau ID warga, dll.
+            $namaBerkas1 = uniqid() . '_' . $berkas1->getClientOriginalName();
+            
+            // Menentukan path tujuan
+            $destinationPath = public_path('plugin/berkas');
+            
+            // Memastikan direktori tujuan ada, jika tidak maka dibuat
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            
+            // Memindahkan file ke direktori tujuan
+            $berkas1->move($destinationPath, $namaBerkas1);
+            
+            // Membuat URL untuk file yang diunggah
+            $url_berkas_1 = "plugin/berkas/" . $namaBerkas1;
+        
+            // Lakukan sesuatu dengan $url_berkas_1, misalnya menyimpannya ke database
         }
-
+        
         // Meng-handle upload berkas 2 (opsional)
         if ($request->hasFile('berkas_2')) {
             $berkas2 = $request->file('berkas_2');
-            $namaBerkas2 = $berkas2->getClientOriginalName(); // Menambahkan ID warga ke dalam nama file
-            $berkas2->move(public_path('plugin\berkas'), $namaBerkas2);
-            $url_berkas_2 = "plugin/berkas/". $namaBerkas2 ;
+            
+            // Membuat nama file yang unik dengan menambahkan timestamp atau ID warga, dll.
+            $namaBerkas2 = uniqid() . '_' . $berkas2->getClientOriginalName();
+            
+            // Menentukan path tujuan
+            $destinationPath = public_path('plugin/berkas');
+            
+            // Memastikan direktori tujuan ada, jika tidak maka dibuat
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            
+            // Memindahkan file ke direktori tujuan
+            $berkas2->move($destinationPath, $namaBerkas2);
+            
+            // Membuat URL untuk file yang diunggah
+            $url_berkas_2 = "plugin/berkas/" . $namaBerkas2;
+        
+            // Lakukan sesuatu dengan $url_berkas_2, misalnya menyimpannya ke database
         }
+        
 
         // Meng-handle upload berkas 3 (opsional)
         if ($request->hasFile('berkas_3')) {
             $berkas3 = $request->file('berkas_3');
-            $namaBerkas3 = $berkas3->getClientOriginalName(); // Menambahkan ID warga ke dalam nama file
-            $berkas3->move(public_path('plugin\berkas'), $namaBerkas3);
-            $url_berkas_3 = "plugin/berkas/". $namaBerkas3 ;
+            
+            // Membuat nama file yang unik dengan menambahkan timestamp atau ID warga, dll.
+            $namaBerkas3 = uniqid() . '_' . $berkas3->getClientOriginalName();
+            
+            // Menentukan path tujuan
+            $destinationPath = public_path('plugin/berkas');
+            
+            // Memastikan direktori tujuan ada, jika tidak maka dibuat
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            
+            // Memindahkan file ke direktori tujuan
+            $berkas3->move($destinationPath, $namaBerkas3);
+            
+            // Membuat URL untuk file yang diunggah
+            $url_berkas_3 = "plugin/berkas/" . $namaBerkas3;
+        
+            // Lakukan sesuatu dengan $url_berkas_1, misalnya menyimpannya ke database
         }
+        
 
      $form_data = array(
       'no_pengajuan'  => $no_pengajuan,

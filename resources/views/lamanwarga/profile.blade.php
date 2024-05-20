@@ -82,21 +82,21 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="desa"><strong> Desa / Kelurahan : </strong></label>
-                            <input type="input" class="form-control" id="desa" name="desa" value={{ $warga->desa }} value="Ciaruteun Ilir" readonly>
+                            <input type="input" class="form-control" id="desa" name="desa" value="Cimanggu I" readonly>
                         </div>
                     </div>
 
                     <div class="col-md-12">
                         <div class="mb-3">
                             <label for="alamat"><strong> Alamat : </strong></label>
-                            <textarea class="form-control" id="alamat" name="alamat" value={{ $warga->alamat }} placeholder="Alamat Lengkap" required></textarea>
+                            <textarea class="form-control" id="alamat" name="alamat" value={{ $warga->alamat }} placeholder="Alamat Lengkap" required>{{ $warga->alamat }}</textarea>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label for="jenis_pekerjaan"><strong> Pekerjaan :</strong></label>
                             <select class="form-control" name='jenis_pekerjaan' required>
-                            <option value=''>Pilih </option>
+                                <option value={{ $warga->jenis_pekerjaan }}>{{ $warga->jenis_pekerjaan }}</option>
                                 <option value='Belum/Tidak Bekerja'>Belum/Tidak Bekerja</option>
                                 <option value='Aparatur/Pejabat Negara'>Aparatur/Pejabat Negara</option>
                                 <option value='Tenaga Pengajar'>Tenaga Pengajar</option>
@@ -114,7 +114,7 @@
                         <div class="mb-3">
                             <label for="jenis_kelamin"><strong> Jenis Kelamin :</strong></label>
                             <select class="form-control" name='jenis_kelamin' required>
-                            <option value=''>Pilih </option>
+                            <option value={{ $warga->jenis_kelamin }}>{{ $warga->jenis_kelamin }} </option>
                                 <option value='Laki-laki'>Laki-laki</option>
                                 <option value='Perempuan'>Perempuan</option>
                             </select>
@@ -125,7 +125,7 @@
                         <div class="mb-3">
                             <label for="agama"><strong> Agama :</strong></label>
                             <select class="form-control" name='agama' required>
-                            <option value=''>Pilih </option>
+                            <option value={{ $warga->agama }}>{{ $warga->agama }} </option>
                                 <option value='Islam'>Islam</option>
                                 <option value='Kristen'>Kristen</option>
                                 <option value='Katolik'>Katolik</option>
@@ -138,8 +138,7 @@
                 </div>
                 @endforeach
                 <div class="mt-2">
-                  <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                  <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                  <button type="submit" class="btn btn-primary me-2">Simpan</button>
                 </div>
               </form>
             </div>

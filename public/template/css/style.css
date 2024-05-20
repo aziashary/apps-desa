@@ -1970,3 +1970,14 @@ section {
 .navbar-menu li a:hover {
   background-color: #f0f0f0; /* Warna latar belakang saat dihover */
 }
+
+#notification-icon.has-notification::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+}

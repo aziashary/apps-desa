@@ -35,11 +35,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
             @endif
-            @if ($errors->any())
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+                  </div>
             @endif
             <table class="table table-striped" id="table1">
                 <thead>
@@ -66,7 +66,9 @@
                         <td  style="width: 130px;">{{ date('d-m-Y', strtotime($sk->created_at)) }}</td>
                         <td >{{ $sk->sks->singkatan_sk}}</td>
                         <td style="width: 300px;" align="center" >
-                            <a href="{{ URL('admindesa/SK/edit/'. $sk->id_sk) }}" class="btn btn-success">Edit</a>
+                            <a href="{{ URL('admindesa/SK/edit/'. $sk->id_sk) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ URL('admindesa/SK/selesai/'. $sk->id_sk) }}" class="btn btn-success" 
+                              onclick="return confirm('Apakah Anda yakin ingin update status surat {{ $sk->no_sk }} atas nama {{ $sk->wargas->nama_warga }}?')">Selesai</a>
                             <a href="{{ URL('admindesa/SK/delete/'. $sk->id_sk) }}" class="btn btn-danger" 
                               onclick="return confirm('Apakah Anda yakin ingin menghapus {{ $sk->sks->singkatan_sk }} atas nama {{ $sk->wargas->nama_warga }}?')">Hapus</a>
                         </td>

@@ -69,6 +69,8 @@ Route::group(['prefix' => 'pengajuan'], function () {
     Route::get('/delete/{id_pengajuan}', [DashboardwargaController::class, 'delete']);
     Route::patch('/update/{id_pengajuan}', [DashboardwargaController::class, 'update']);
     });
+
+Route::get('/notifications/unread', [DashboardwargaController::class, 'getUnreadNotifications']);
 });
 
 // Admin Desa
@@ -110,6 +112,7 @@ Route::group(['prefix' => 'admindesa', 'middleware' => 'isAdmin'], function () {
     Route::get('/', [SKcontroller::class, 'index']);
     Route::get('/create', [SKcontroller::class, 'create']);
     Route::get('/pengajuan', [SKcontroller::class, 'pengajuan']);
+    Route::get('/selesai/{id_sk}', [SKcontroller::class, 'selesai']);
     Route::get('/pengajuan_baru', [SKcontroller::class, 'pengajuan_baru']);
     Route::patch('/detail/{id_pengajuan}', [SKcontroller::class, 'detail']);
     Route::post('/store', [SKcontroller::class, 'store']);

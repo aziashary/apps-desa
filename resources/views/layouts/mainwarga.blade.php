@@ -178,34 +178,18 @@
           </div>
 
           <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-            <!-- Search -->
-            {{-- <div class="navbar-nav align-items-center">
-              <div class="nav-item d-flex align-items-center">
-                <i class="bx bx-search fs-4 lh-0"></i>
-                <input
-                  type="text"
-                  class="form-control border-0 shadow-none"
-                  placeholder="Search..."
-                  aria-label="Search..."
-                />
-              </div>
-            </div> --}}
-            <!-- /Search -->
-
+            <span class="fw-bolder" style="width: 100%;">Dashboard Warga Pelayanan Desa Cimanggu I</span>
             <ul class="navbar-nav d-flex align-items-center ms-auto">
-              <span class="fw-bolder" style="width: 100%;">{{ Auth::user()->name }}</span>
               <!-- Place this tag where you want the button to render. -->
-              {{-- <li class="nav-item lh-1 me-3">
-                <a
-                  class="github-button"
-                  href="https://github.com/themeselection/sneat-html-admin-template-free"
-                  data-icon="octicon-star"
-                  data-size="large"
-                  data-show-count="true"
-                  aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                  >Star</a
-                >
-              </li> --}}
+              <div class="nav-item navbar-dropdown dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <i class="bx bx-notification"></i>
+                    <span class="badge bg-danger" id="notification-count"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" id="notifications-list">
+                    <!-- Notifikasi akan dimasukkan di sini -->
+                </ul>
+            </div>
 
               <!-- User -->
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -215,24 +199,19 @@
                   {{-- </div> --}}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                  {{-- <li>
-                    <a class="dropdown-item" href="#">
+                  <li>
+                    <a class="dropdown-item">
                       <div class="d-flex">
-                        <div class="flex-shrink-0 me-3">
-                          <div class="avatar avatar-online">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                          </div>
-                        </div>
                         <div class="flex-grow-1">
-                          <span class="fw-semibold d-block">John Doe</span>
-                          <small class="text-muted">Admin</small>
+                          <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+                          <small class="text-muted">{{ Auth::user()->username }}</small>
                         </div>
                       </div>
                     </a>
                   </li>
                   <li>
                     <div class="dropdown-divider"></div>
-                  </li> --}}
+                  </li>
                   <li>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
                       <i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
@@ -289,6 +268,8 @@
     <script src="{{ asset ('plugin/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset ('plugin/vendor/js/bootstrap.js') }}"></script>
     <script src="{{ asset ('plugin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
     <script src="{{ asset ('plugin/vendor/js/menu.js') }}"></script>
     <!-- endbuild -->
@@ -314,7 +295,34 @@
       }, 5000);
     </script>
 
-    
+<script type="text/javascript">
+  $(document).ready(function() {
+      function fetchNotifications() {
+          $.ajax({
+              url: '/dashboardwarga/notifications/unread',
+              method: 'GET',
+              success: function(data) {
+                  let notifications = data;
+                  let count = notifications.length;
+                  $('#notification-count').text(count);
+
+                  let list = $('#notifications-list');
+                  list.empty();
+                  notifications.forEach(function(notification) {
+                      let timeAgo = moment(notification.created_at).fromNow();
+                      list.append('<li class="dropdown-item">' + notification.message + ' <br><small>' + timeAgo + '</small></li>');
+                  });
+              }
+          });
+      }
+
+      fetchNotifications();
+
+      // Set interval to fetch notifications every 30 seconds
+      setInterval(fetchNotifications, 30000);
+  });
+</script>
+      
 @stack('js')
 </body>
 

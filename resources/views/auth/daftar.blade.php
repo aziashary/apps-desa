@@ -83,29 +83,30 @@
                 <!-- /Logo -->
                 <h4 class="mb-2">Pelayanan Umum Cimanggu I</h4>
                 <p class="mb-4">Silahkan daftar dan isi data diri dengan lengkap dan benar</p>
+                <x-auth-validation-errors class="mb-4" :errors="$errors" />
   
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('register') }}">
                     @csrf
                   <div class="mb-3">
-                    <label for="username" class="form-label">NIK</label>
+                    <label for="username" class="form-label">NIK*</label>
                     <input
                       type="number"
                       class="form-control"
                       id="username"
                       name="username" :value="old('username')"
-                      placeholder="Enter your NIK"
+                      placeholder="Isi NIK"
                       autofocus
                     required/>
                   </div>
 
                   <div class="mb-3">
-                    <label for="username" class="form-label">Nama</label>
+                    <label for="username" class="form-label">Nama*</label>
                     <input
                       type="text"
                       class="form-control"
                       id="username"
                       name="nama_warga"
-                      placeholder="Enter your username"
+                      placeholder="Isi Nama"
                       autofocus
                     required/>
                   </div>
@@ -117,10 +118,92 @@
                       class="form-control"
                       id="username"
                       name="no_kk"
-                      placeholder="Enter your No KK"
+                      placeholder="Isi No KK"
+                      autofocus
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Tempat Lahir*</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      name="tempat_lahir"
+                      placeholder="Isi Tempat Lahir"
                       autofocus
                     required/>
                   </div>
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Tanggal Lahir*</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="username"
+                      name="tanggal_lahir"
+                      placeholder="Isi Tanggal Lahir"
+                      autofocus
+                    required/>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Alamat</label>
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      name="alamat"
+                      placeholder="Isi Alamat"
+                      autofocus
+                    required> </textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Jenis Pekerjaan*</label>
+                      <select class="form-control" name='jenis_pekerjaan' required>
+                      <option value='' selected disabled>-- Pilih Pekerjaan -- </option>
+                          <option value='Belum/Tidak Bekerja'>Belum/Tidak Bekerja</option>
+                          <option value='Aparatur/Pejabat Negara'>Aparatur/Pejabat Negara</option>
+                          <option value='Tenaga Pengajar'>Tenaga Pengajar</option>
+                          <option value='Wiraswasta'>Wiraswasta</option>
+                          <option value='Wirausaha'>Wirausaha</option>
+                          <option value='Pensiunan'>Pensiunan</option>
+                          <option value='Pelajar'>Pelajar</option>
+                          <option value='Mahasiswa'>Mahasiswa</option>
+                          <option value='Mahasiswa'>Lainnya</option>
+                      </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Jenis Kelamin*</label>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="satu_keterangan" value="Laki-laki" checked>
+                        <label class="form-check-label" for="satu_keterangan">
+                            Laki - laki
+                        </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="dua_keterangan" value="Perempuan">
+                            <label class="form-check-label" for="dua_keterangan">
+                              Perempuan
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label for="username" class="form-label">Agama* :</label>
+                      <select class="form-control" name='agama' required>
+                        <option value='' selected disabled>Pilih </option>
+                            <option value='Islam'>Islam</option>
+                            <option value='Kristen'>Kristen</option>
+                            <option value='Katolik'>Katolik</option>
+                            <option value='Hindu'>Hindu</option>
+                            <option value='Budha'>Budha</option>
+                            <option value='Konghucu'>Konghucu</option>
+                        </select>
+                    </div>
+
                   <div class="mb-3 form-password-toggle">
                     <div class="d-flex justify-content-between">
                       <label class="form-label" for="password">Password</label>
@@ -160,7 +243,7 @@
 
                  
                   <div class="mb-3">
-                    <button class="btn btn-primary d-grid w-100" type="submit" Disabled>Sign in</button>
+                    <button class="btn btn-primary d-grid w-100" type="submit">Daftar</button>
                   </div>
                 </form>
                 <p class="text-center">

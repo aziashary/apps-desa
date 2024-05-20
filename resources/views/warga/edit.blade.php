@@ -99,7 +99,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="desa"><strong> Desa / Kelurahan : </strong></label>
-                                <input type="input" class="form-control" id="desa" name="desa" value="Ciaruteun Ilir" readonly>
+                                <input type="input" class="form-control" id="desa" name="desa" value="Cimanggu I" readonly>
                             </div>
                         </div>
 

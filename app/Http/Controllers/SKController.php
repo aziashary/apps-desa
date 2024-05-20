@@ -11,6 +11,7 @@ use App\Models\Kodesk;
 use App\Models\Warga;
 use App\Models\Aparaturdesa;
 use App\Models\Pengajuan;
+use App\Models\Notification;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Settings;
 use PhpOffice\PhpSpreadsheet\Writer\Html;
@@ -33,6 +34,39 @@ class SKController extends Controller
         return view('sk.create', compact('data','item'));
     }
 
+    function selesai($id_sk)
+    { 
+        $status = Notification::where('id_sk', $id_sk)->get();
+
+            // Periksa apakah $status kosong atau tidak
+            if (!$status->isEmpty()) {
+                // Jika kosong, artinya tidak ada notifikasi yang sesuai
+                return back()->with('error', 'No Surat ini telah diupdate');
+            }
+
+            // Ambil data SK terkait
+            $data = SK::where('id_sk', $id_sk)->with('wargas')->with('sks')->first();
+
+            // Pastikan data SK ada sebelum mencoba membuat notifikasi baru
+            if (!$data) {
+                return back()->with('error', 'Data SK tidak ditemukan');
+            }
+
+            // Buat notifikasi surat selesai
+            $selesai = Notification::create([
+                'id_warga' => $data->id_warga,
+                'id_sk' => $id_sk,
+                'message' =>  "Status <strong>{$data->jenis_sk}</strong> Anda dengan nomor <strong>{$data->no_sk}</strong> telah <strong>SELESAI</strong>. Silahkan pergi ke kantor desa untuk pengambilan surat."
+            ]);
+
+        if ($selesai) {
+                return redirect('admindesa/SK')->with('success', 'Berhasil Update Status Surat');
+            } else {
+                return back()->with('error', 'Gagal Memperbarui Data');
+        }
+
+    }
+
     public function pengajuan()
     {
         $data = Pengajuan::where('status_pengajuan', 'Denied')
@@ -53,6 +87,7 @@ class SKController extends Controller
         return view('sk.pengajuan_baru', compact('data'));
     }
 
+    
     public function detail(Request $request, $id_pengajuan)
     {
         $request->validate([
@@ -60,6 +95,11 @@ class SKController extends Controller
         ]);
         $update = Pengajuan::where('id_pengajuan', $id_pengajuan)->update([
             'status_pengajuan' => $request->status_pengajuan,
+        ]);
+        Notification::create([
+            'id_warga' => $request->id_warga,
+            'message' =>  "Status pengajuan <strong>{$request->jenis_pengajuan}</strong> Anda dengan nomor <strong>{$request->no_pengajuan}</strong> 
+            telah di <strong>{$request->status_pengajuan}</strong>."
         ]);
 
         // Variable Memasukan data ke table SK
@@ -99,6 +139,8 @@ class SKController extends Controller
         );
 
         $sk=SK::create($form_data);
+        
+        
             }
 
         if($update){

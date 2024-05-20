@@ -83,7 +83,7 @@
                 <!-- /Logo -->
                 <h4 class="mb-2">Pelayanan Umum Cimanggu I</h4>
                 <p class="mb-4">Silahkan login dengan username dan password yang tepat</p>
-  
+                <x-auth-validation-errors class="mb-4" :errors="$errors" />
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                   <div class="mb-3">
